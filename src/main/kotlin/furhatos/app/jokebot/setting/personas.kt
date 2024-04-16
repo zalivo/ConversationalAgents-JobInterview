@@ -27,5 +27,5 @@ fun FlowControlRunner.activate(persona: Persona) {
 val mainPersona = Persona(
         name = "Host",
         face = listOf("Alex"),
-        voice = listOf(PollyNeuralVoice.Matthew(),PollyNeuralVoice.Joanna()).shuffled() // randomize what voice to select
+        voice = listOf(PollyNeuralVoice.Matthew())
 )

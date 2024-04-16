@@ -45,6 +45,8 @@ repositories {
 dependencies {
     implementation 'com.furhatrobotics.furhatos:furhat-commons:2.7.0'
     implementation 'com.google.code.gson:gson:2.8.6'
+    //The latest library asset collection
+    compile 'com.furhatrobotics.assets:StandardLibraryCollection:1.2.0'
 }
 
 jar {
