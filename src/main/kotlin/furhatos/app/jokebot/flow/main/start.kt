@@ -70,7 +70,7 @@ val TellMeAboutYourself: State = state(Parent) {
     //User responds something, proceed
     onResponse {
         furhat.say("That sounds really interesting!")
-        goto(JokeSequence)
+        goto(RoleInterest)
     }
 
     //User doesn't respond, the user should repeat oneself
@@ -89,12 +89,12 @@ val RepeatAboutYourself: State = state(Parent) {
     //User answers something, proceed
     onResponse{
         furhat.say("That sounds really interesting!")
-        goto(JokeSequence)
+        goto(RoleInterest)
     }
 
     //User doesn't respond, proceed anyway
     onNoResponse{
-        goto(JokeSequence)
+        goto(RoleInterest)
     }
     }
 

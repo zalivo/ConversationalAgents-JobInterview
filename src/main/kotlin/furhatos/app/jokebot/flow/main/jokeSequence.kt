@@ -4,6 +4,8 @@ import furhatos.app.jokebot.flow.Parent
 import furhatos.app.jokebot.jokes.*
 import furhatos.app.jokebot.nlu.BadJoke
 import furhatos.app.jokebot.nlu.GoodJoke
+import furhatos.app.jokebot.nlu.MotivatedUser
+import furhatos.app.jokebot.nlu.UnMotivatedUser
 import furhatos.app.jokebot.util.calculateJokeScore
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.No
@@ -15,6 +17,73 @@ import furhatos.skills.emotions.UserGestures
  *
  * Once the joke has been told, prompts the user if they want to hear another joke.
  */
+
+/** In interview bot we want to proceed with questions and respond according to
+ * the user's answers.
+ */
+
+/** NOTE!! THE CODING HAS BEEN DONE FOR INTERVIEW BOT UNTIL "ROLE INTEREST"
+ * QUESTION. KEEP THIS IN MIND WHILE RUNNING THE ROBOT.
+ */
+
+
+val RoleInterest: State = state(Parent) {
+
+    //Starting the real questions in the interview
+    onEntry {
+        furhat.ask("Okay now, why does this role interest you?")
+    }
+
+    //User answers with motivational intent
+    onResponse<MotivatedUser>{
+        furhat.say("Alright, that sounds good.")
+        //Go to next question
+        //CHANGE TO NEXT QUESTION, DON'T KEEP JOKESEQUENCE
+        goto(JokeSequence)
+    }
+
+    //User answers with unmotivational intent (look nlu)
+    onResponse<UnMotivatedUser>{
+        furhat.say("Alrighty then, moving on.")
+        //Go to next question
+        //CHANGE TO NEXT QUESTION, DON'T KEEP JOKESEQUENCE
+        goto(JokeSequence)
+    }
+
+    //User doesn't answer, proceed to repetition (look nlu)
+    onNoResponse {
+        furhat.say("Sorry I could not hear you. Could you repeat that?")
+        goto(RepeatMotivation)
+    }
+}
+
+//For repetition of motivation question
+val RepeatMotivation: State = state(Parent) {
+    onEntry {
+        furhat.listen()
+    }
+
+    //User responds with motivational intent
+    onResponse<MotivatedUser> {
+        furhat.say("Alright, that sounds good.")
+        //CHANGE TO NEXT QUESTION, DON'T KEEP JOKESEQUENCE
+        goto(JokeSequence)
+    }
+
+    //User answers with unmotivational intent
+    onResponse<UnMotivatedUser> {
+        furhat.say("Alrighty then, moving on.")
+        //CHANGE TO NEXT QUESTION, DON'T KEEP JOKESEQUENCE
+        goto(JokeSequence)
+    }
+
+    //User doesn't respond, proceed anyway
+    onNoResponse {
+        //CHANGE TO NEXT QUESTION, DON'T KEEP JOKESEQUENCE
+        goto(JokeSequence)
+    }
+}
+
 val JokeSequence: State = state(Parent) {
 
     onEntry {
