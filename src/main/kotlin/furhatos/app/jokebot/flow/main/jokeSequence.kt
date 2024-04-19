@@ -31,23 +31,29 @@ val RoleInterest: State = state(Parent) {
 
     //Starting the real questions in the interview
     onEntry {
-        furhat.ask("Okay now, why does this role interest you?")
+        //User has 30 seconds to answer
+        furhat.ask("Okay now, why does this role interest you?", timeout = 30000)
     }
 
     //User answers with motivational intent
     onResponse<MotivatedUser>{
         furhat.say("Alright, that sounds good.")
         //Go to next question
-        //CHANGE TO NEXT QUESTION, DON'T KEEP JOKESEQUENCE
-        goto(JokeSequence)
+        goto(HearAboutPosition)
     }
 
     //User answers with unmotivational intent (look nlu)
     onResponse<UnMotivatedUser>{
         furhat.say("Alrighty then, moving on.")
         //Go to next question
-        //CHANGE TO NEXT QUESTION, DON'T KEEP JOKESEQUENCE
-        goto(JokeSequence)
+        goto(HearAboutPosition)
+    }
+
+    //User answers with none of the trigger words/phrases in nlu
+    onResponse {
+        furhat.say("Okay, sounds good.")
+        //Go to next question
+        goto(HearAboutPosition)
     }
 
     //User doesn't answer, proceed to repetition (look nlu)
@@ -60,27 +66,80 @@ val RoleInterest: State = state(Parent) {
 //For repetition of motivation question
 val RepeatMotivation: State = state(Parent) {
     onEntry {
-        furhat.listen()
+        //User has 30 seconds to answer
+        furhat.listen(timeout = 30000)
     }
 
     //User responds with motivational intent
     onResponse<MotivatedUser> {
         furhat.say("Alright, that sounds good.")
-        //CHANGE TO NEXT QUESTION, DON'T KEEP JOKESEQUENCE
-        goto(JokeSequence)
+        goto(HearAboutPosition)
     }
 
     //User answers with unmotivational intent
     onResponse<UnMotivatedUser> {
         furhat.say("Alrighty then, moving on.")
-        //CHANGE TO NEXT QUESTION, DON'T KEEP JOKESEQUENCE
-        goto(JokeSequence)
+        goto(HearAboutPosition)
+    }
+
+    //User answers with none of the trigger words/phrases in nlu
+    onResponse {
+        furhat.say("Okay, sounds good.")
+        //Go to next question
+        goto(HearAboutPosition)
     }
 
     //User doesn't respond, proceed anyway
     onNoResponse {
-        //CHANGE TO NEXT QUESTION, DON'T KEEP JOKESEQUENCE
+        furhat.say("I couldn't hear you now either. Could you repeat that?")
+        //We re-enter the repeating, robot will listen again
+        //User can then repeat their answer
+        reentry()
+    }
+}
+
+//Question where answer doesn't need to be stored
+val HearAboutPosition: State = state(Parent) {
+
+    onEntry {
+        //User has 30 seconds to answer
+        furhat.ask("Where did you hear about this position?", timeout = 30000)
+    }
+
+    //User answers something random, we proceed to next question
+    onResponse {
+        furhat.say("Okay well that sounds nice! We are really happy that you are here.")
+        //REMOVE JOKESEQUENCE, ADD NEXT QUESTION INSTEAD
         goto(JokeSequence)
+    }
+
+    //User doesn't answer -> Robot asks for repetition
+    onNoResponse {
+        furhat.say("Could you repeat that?")
+        goto(RepeatHearAboutPosition)
+    }
+
+}
+
+//For repetition of "hear about position" question
+val RepeatHearAboutPosition: State = state(Parent) {
+    onEntry {
+        //User has 30 seconds to answer
+        furhat.listen(timeout = 30000)
+    }
+
+    //User responds, we go to next question
+    onResponse {
+        furhat.say("Okay well that sounds nice! We are really happy that you are here.")
+        //REMOVE JOKESEQUENCE, ADD NEXT QUESTION INSTEAD
+        goto(JokeSequence)
+    }
+
+    //User doesn't answer, repeat
+    onNoResponse {
+        furhat.say("I can't hear you. Could you repeat yourself?")
+        //Re-enter repetition
+        reentry()
     }
 }
 

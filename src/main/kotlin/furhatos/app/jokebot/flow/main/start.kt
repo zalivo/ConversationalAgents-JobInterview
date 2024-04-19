@@ -83,7 +83,7 @@ val TellMeAboutYourself: State = state(Parent) {
 //For repetition of tell me about yourself question
 val RepeatAboutYourself: State = state(Parent) {
     onEntry {
-        furhat.listen()
+        furhat.listen(timeout = 60000)
     }
 
     //User answers something, proceed
@@ -94,7 +94,10 @@ val RepeatAboutYourself: State = state(Parent) {
 
     //User doesn't respond, proceed anyway
     onNoResponse{
-        goto(RoleInterest)
+        furhat.say("I couldn't hear you now either. Could you repeat that?")
+        //We re-enter the repeating, robot will listen again
+        //User can then repeat their answer
+        reentry()
     }
     }
 
