@@ -1,3 +1,7 @@
+/***
+ * In nlu.kt we can store words that we want the conversational agents to listen for
+ */
+
 package furhatos.app.jokebot.nlu
 
 import furhatos.nlu.Intent
