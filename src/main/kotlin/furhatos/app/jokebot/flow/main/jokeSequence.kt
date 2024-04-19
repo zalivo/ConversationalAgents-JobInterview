@@ -37,7 +37,7 @@ val RoleInterest: State = state(Parent) {
 
     //User answers with motivational intent
     onResponse<MotivatedUser>{
-        furhat.say("Alright, that sounds good.")
+        furhat.say("That sounds really good!")
         //Go to next question
         goto(HearAboutPosition)
     }
@@ -51,7 +51,7 @@ val RoleInterest: State = state(Parent) {
 
     //User answers with none of the trigger words/phrases in nlu
     onResponse {
-        furhat.say("Okay, sounds good.")
+        furhat.say("Okay, that sounds good.")
         //Go to next question
         goto(HearAboutPosition)
     }
@@ -72,7 +72,7 @@ val RepeatMotivation: State = state(Parent) {
 
     //User responds with motivational intent
     onResponse<MotivatedUser> {
-        furhat.say("Alright, that sounds good.")
+        furhat.say("That sounds really good!")
         goto(HearAboutPosition)
     }
 
@@ -84,7 +84,7 @@ val RepeatMotivation: State = state(Parent) {
 
     //User answers with none of the trigger words/phrases in nlu
     onResponse {
-        furhat.say("Okay, sounds good.")
+        furhat.say("Okay, that sounds good.")
         //Go to next question
         goto(HearAboutPosition)
     }
@@ -103,7 +103,7 @@ val HearAboutPosition: State = state(Parent) {
 
     onEntry {
         //User has 30 seconds to answer
-        furhat.ask("Where did you hear about this position?", timeout = 30000)
+        furhat.ask("And where did you hear about this position?", timeout = 30000)
     }
 
     //User answers something random, we proceed to next question

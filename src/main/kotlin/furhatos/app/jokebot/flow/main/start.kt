@@ -13,7 +13,7 @@ val Start : State = state(Parent) {
 
     //Says "Nice to meet you *user name*"
     onResponse<PersonName> {
-        furhat.say("Nice to meet you" + it.intent)
+        furhat.say("Nice to meet you " + it.intent)
         goto(CanWeStart)
     }
 
@@ -38,7 +38,7 @@ val CanWeStart: State = state(Parent) {
 
     //If user responds yes, proceed to tell me about yourself question
     onResponse<Yes> {
-        furhat.say("All right, sounds good.")
+        furhat.say("Perfect! We will start then.")
         goto(TellMeAboutYourself)
     }
 
@@ -64,7 +64,7 @@ val CanWeStart: State = state(Parent) {
 //Tell me about yourself question, user gets to answer for 1 minute
 val TellMeAboutYourself: State = state(Parent) {
     onEntry {
-        furhat.ask("All right, so tell me a little bit about yourself.", timeout = 60000)
+        furhat.ask("So, tell me a little bit about yourself.", timeout = 60000)
     }
 
     //User responds something, proceed
