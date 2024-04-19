@@ -1,4 +1,4 @@
-package furhatos.app.jokebot.flow.main
+  package furhatos.app.jokebot.flow.main
 
 import furhatos.app.jokebot.flow.Parent
 import furhatos.nlu.common.*
@@ -8,10 +8,11 @@ val Start : State = state(Parent) {
 
     //Robot Johnny welcomes user to job interview and asks for user's name
     onEntry {
-        furhat.ask("Hi there. Welcome to this job interview for the IT junior position at our company. My name is Johnny, and I am going to lead this interview. What is your name?", timeout = 5000)
+        furhat.ask("Hi there. Welcome to this job interview for the IT junior position at our company. My name is Johnny, and I am going to lead this interview. Before we start with the interview itself I would like to say, that this interview is going to be recorded and sent to our HR team for further evaluation. Do you give consent for this interview to be recorded?" +
+                " What is your name?", timeout = 5000)
     }
 
-    //Says "Nice to meet you *user name*"
+    //Says "Nice to meet you *user name*
     onResponse<PersonName> {
         furhat.say("Nice to meet you " + it.intent)
         goto(CanWeStart)
@@ -62,7 +63,12 @@ val CanWeStart: State = state(Parent) {
     }
 }
 
-//Tell me about yourself question, user gets to answer for 1 minute
+  /**
+   * Tell me about yourself question, user gets to answer for 1 minute
+   * Maybe add something in case the users asks why? I dunno, just an idea
+   * Even if I say something short, the CA automatically jumps into the conversation
+    */
+
 val TellMeAboutYourself: State = state(Parent) {
     onEntry {
         furhat.ask("So, tell me a little bit about yourself.", timeout = 60000)

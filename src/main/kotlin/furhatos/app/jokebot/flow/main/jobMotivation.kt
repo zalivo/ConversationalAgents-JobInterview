@@ -1,16 +1,9 @@
 package furhatos.app.jokebot.flow.main
 
 import furhatos.app.jokebot.flow.Parent
-import furhatos.app.jokebot.jokes.*
-import furhatos.app.jokebot.nlu.BadJoke
-import furhatos.app.jokebot.nlu.GoodJoke
 import furhatos.app.jokebot.nlu.MotivatedUser
 import furhatos.app.jokebot.nlu.UnMotivatedUser
-import furhatos.app.jokebot.util.calculateJokeScore
 import furhatos.flow.kotlin.*
-import furhatos.nlu.common.No
-import furhatos.nlu.common.Yes
-import furhatos.skills.emotions.UserGestures
 
 /**
  * This state gets jokes, tells jokes, and records the user's response to it.
@@ -99,6 +92,7 @@ val RepeatMotivation: State = state(Parent) {
 }
 
 //Question where answer doesn't need to be stored
+// TODO listen to social media variables and reply accordingly
 val HearAboutPosition: State = state(Parent) {
 
     onEntry {
@@ -110,8 +104,7 @@ val HearAboutPosition: State = state(Parent) {
     //User answers something random, we proceed to next question
     onResponse {
         furhat.say("Okay well that sounds nice! We are really happy that you are here.")
-        //REMOVE JOKESEQUENCE, ADD NEXT QUESTION INSTEAD
-        goto(JokeSequence)
+        goto(CompanyReason)
     }
 
     //User doesn't answer -> Robot asks for repetition
@@ -132,8 +125,7 @@ val RepeatHearAboutPosition: State = state(Parent) {
     //User responds, we go to next question
     onResponse {
         furhat.say("Okay well that sounds nice! We are really happy that you are here.")
-        //REMOVE JOKESEQUENCE, ADD NEXT QUESTION INSTEAD
-        goto(JokeSequence)
+        goto(CompanyReason)
     }
 
     //User doesn't answer, repeat
@@ -144,6 +136,17 @@ val RepeatHearAboutPosition: State = state(Parent) {
     }
 }
 
+val CompanyReason : State = state(Parent) {
+
+    onEntry {
+        furhat.ask("Could you please tell me why would you like to work specifically in our company?")
+    }
+    onResponse{
+        furhat.say("Text")
+        goto(SkillSecIntro)
+    }
+}
+/*
 val JokeSequence: State = state(Parent) {
 
     onEntry {
@@ -247,3 +250,4 @@ val JokeScore: State = state(Parent) {
         terminate(calculateJokeScore(timeSmiledAtJoke, jokeTimeout, saidBadJoke, saidGoodJoke))
     }
 }
+*/
