@@ -106,6 +106,7 @@ val HearAboutPosition: State = state(Parent) {
         furhat.ask("And where did you hear about this position?", timeout = 30000)
     }
 
+    //ADD SOCIAL MEDIA ANSWER
     //User answers something random, we proceed to next question
     onResponse {
         furhat.say("Okay well that sounds nice! We are really happy that you are here.")

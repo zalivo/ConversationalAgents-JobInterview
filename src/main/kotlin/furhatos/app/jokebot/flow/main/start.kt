@@ -25,6 +25,7 @@ val Start : State = state(Parent) {
 
     //If the user does not respond, proceed anyway
     onNoResponse {
+        //Add a funny comment
         goto(CanWeStart)
     }
 }
