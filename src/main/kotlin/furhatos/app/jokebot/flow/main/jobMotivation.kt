@@ -95,7 +95,7 @@ val repeatMotivation: State = state(Parent) {
     }
 }
 
-/**
+/** TODO
  * in positionExpectations and growth we should either created seperated word list that we want to listen for and
  * probably comment or we could keep the motivated and unMotivatedUser
  */

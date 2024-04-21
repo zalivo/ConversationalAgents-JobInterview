@@ -42,11 +42,29 @@ val pythonCheck: State = state(Parent) {
     onEntry {
         furhat.ask(
             "Because for this position some previous experience with Python would be appreciated I would" +
-                    "like to ask if you have such experiences"
+                    "like to ask if you have such experiences. If yes, please describe them"
         )
     }
-    onResponse {
+    onResponse<Yes> {
         furhat.say("Text")
+        goto(programmingLanguages)
+    }
+
+    onResponse<No> {
+        furhat.say({
+            random {
+                +"That's okay! We have resources and support to help you get up to speed."
+                +"No worries! Many programming concepts are transferable between languages. Your experience with other languages might give you a unique perspective when learning Python."
+                +"It's never too late to learn Python! We offer training and mentorship programs to help you build your skills and confidence with the language."
+                +"That's alright! We value a willingness to learn and grow. If you're open to it, we can provide resources to help you get started with Python."
+                +"Don't worry if you haven't used Python before. We have a supportive environment where you'll have the opportunity to learn and develop your skills."
+                +"If you're curious about Python, this could be a great opportunity to dive into something new. We're here to support you along the way!"
+                +"Our team is collaborative, and we often learn from each other. If you're interested in Python, you'll have a supportive team to learn with."
+                +"Even if you haven't used Python, we offer training sessions and workshops to help our team members learn and grow in their roles."
+                +"We believe in continuous learning and personal growth. If you're motivated to learn Python, we'll provide the resources and support you need."
+                +"While Python experience is beneficial, problem-solving skills and a strong foundation in programming principles are equally important. We value diverse experiences and perspectives."
+            }
+        })
         goto(programmingLanguages)
     }
 }
@@ -120,6 +138,9 @@ val internationalSetting: State = state(Parent) {
     }
 }
 
+/**
+ *We could listen for some common projects positions like leader or whatever
+ */
 val teamRole: State = state(Parent) {
     onEntry {
         furhat.ask(
