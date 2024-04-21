@@ -100,24 +100,26 @@ val repeatMotivation: State = state(Parent) {
  * probably comment or we could keep the motivated and unMotivatedUser
  */
 
-val positionExpectations : State = state(Parent){
-    onEntry{
-        furhat.ask("I'd like to ask you what are your expectations from this position. Not salaray wise but" +
-                "rather about the experience you can get or projects you might work on.")
+val positionExpectations: State = state(Parent) {
+    onEntry {
+        furhat.ask(
+            "I'd like to ask you what are your expectations from this position. Not salaray wise but" +
+                    "rather about the experience you can get or projects you might work on."
+        )
     }
-    onResponse<motivatedUser>{
+    onResponse<motivatedUser> {
         goto(growth)
     }
-    onResponse{
+    onResponse {
         goto(growth)
     }
 }
 
-val growth : State = state(Parent){
-    onEntry{
+val growth: State = state(Parent) {
+    onEntry {
         furhat.ask("How do you think this position will improve your professional and personal skills?")
     }
-    onResponse{
+    onResponse {
         goto(hearAboutPosition)
     }
 }
