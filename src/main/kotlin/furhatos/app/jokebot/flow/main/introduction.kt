@@ -4,62 +4,91 @@ import furhatos.app.jokebot.flow.Parent
 import furhatos.nlu.common.*
 import furhatos.flow.kotlin.*
 
-val Start : State = state(Parent) {
-
-    //Robot Johnny welcomes user to job interview and asks for user's name
+val startConsent : State = state(Parent) {
+    /**
+     * Robot Johnny welcomes user to job interview and asks for user's name
+     */
     onEntry {
-        furhat.ask("Hi there. Welcome to this job interview for the IT junior position at our company. My name is Johnny, and I am going to lead this interview. Before we start with the interview itself I would like to say, that this interview is going to be recorded and sent to our HR team for further evaluation. Do you give consent for this interview to be recorded?" +
-                " What is your name?", timeout = 5000)
+        furhat.ask("Hi there. Welcome to this job interview for the IT junior position at our company. My name is Johnny," +
+                "and I am going to lead this interview. Before we start with the interview I would like to say," +
+                "that this interview is going to be recorded and sent to our HR team for further evaluation." +
+                "Do you give consent for this interview to be recorded?")
     }
-
-    //Says "Nice to meet you *user name*
-    onResponse<PersonName> {
-        furhat.say("Nice to meet you " + it.intent)
-        goto(CanWeStart)
-    }
-
-    //If the user says something else or the name is not in library
     onResponse {
-        furhat.say("Nice to meet you!")
-        goto(CanWeStart)
-    }
-
-    //If the user does not respond, proceed anyway
-    onNoResponse {
-        //Add a funny comment
-        goto(CanWeStart)
+        furhat.say("Text")
+        goto(askName)
     }
 }
 
-//Starting the interview state
-val CanWeStart: State = state(Parent) {
+val askName : State = state(Parent) {
+
+    onEntry{
+        furhat.ask("Perfect, what is your name?")
+    }
+    /**
+     * Says "Nice to meet you *user name*
+     */
+    onResponse<PersonName> {
+        furhat.say("Nice to meet you " + it.intent)
+        goto(canWeStart)
+    }
+
+    /**
+     * If the user says something else or the name is not in library
+     */
+    onResponse {
+        furhat.say("Nice to meet you!")
+        goto(canWeStart)
+    }
+
+    /**
+     * If the user does not respond, proceed anyway
+     */
+    onNoResponse {
+        //Add a funny comment
+        goto(canWeStart)
+    }
+}
+
+  /**
+   * Starting the interview state
+   */
+  val canWeStart: State = state(Parent) {
 
     onEntry {
         furhat.ask("Are you comfortable and ready to start the interview?", timeout = 4000)
     }
 
-    //If user responds yes, proceed to tell me about yourself question
+      /**
+       * If user responds yes, proceed to tell me about yourself question
+       */
     onResponse<Yes> {
         furhat.say("Perfect! We will start then.")
-        goto(TellMeAboutYourself)
+        goto(tellMeAboutYourself)
     }
 
-    //If user says no, proceed anyway
+      /**
+       * If user says no, proceed anyway
+       */
     onResponse<No> {
         furhat.say("Okay well that's a shame, we really need to start though.")
-        goto(TellMeAboutYourself)
+        goto(tellMeAboutYourself)
     }
 
-    //If user responds something else, proceed anyway
+      /**
+       * If user responds something else, proceed anyway
+       */
     onResponse {
         furhat.say("I will take that as a yes.")
-        goto(TellMeAboutYourself)
+        goto(tellMeAboutYourself)
     }
 
-    //If user doesn't respond, proceed anyway
+      /**
+       * If user doesn't respond, proceed anyway
+       */
     onNoResponse {
         furhat.say("I will take that as a yes.")
-        goto(TellMeAboutYourself)
+        goto(tellMeAboutYourself)
     }
 }
 
@@ -69,37 +98,47 @@ val CanWeStart: State = state(Parent) {
    * Even if I say something short, the CA automatically jumps into the conversation
     */
 
-val TellMeAboutYourself: State = state(Parent) {
+val tellMeAboutYourself: State = state(Parent) {
     onEntry {
         furhat.ask("So, tell me a little bit about yourself.", timeout = 60000)
     }
 
-    //User responds something, proceed
+      /**
+       * User responds something, proceed
+       */
     onResponse {
         furhat.say("That sounds really interesting!")
-        goto(RoleInterest)
+        goto(roleInterest)
     }
 
-    //User doesn't respond, the user should repeat oneself
+      /**
+       * User doesn't respond, the user should repeat oneself
+       */
     onNoResponse{
         furhat.say("I can't really hear you. Could you repeat that?")
-        goto(RepeatAboutYourself)
+        goto(repeatAboutYourself)
     }
 }
 
-//For repetition of tell me about yourself question
-val RepeatAboutYourself: State = state(Parent) {
+  /**
+   * For repetition of tell me about yourself question
+   */
+  val repeatAboutYourself: State = state(Parent) {
     onEntry {
         furhat.listen(timeout = 60000)
     }
 
-    //User answers something, proceed
+      /**
+       * User answers something, proceed
+       */
     onResponse{
         furhat.say("That sounds really interesting!")
-        goto(RoleInterest)
+        goto(roleInterest)
     }
 
-    //User doesn't respond, proceed anyway
+    /**
+     * User doesn't respond, proceed anyway
+     */
     onNoResponse{
         furhat.say("I couldn't hear you now either. Could you repeat that?")
         //We re-enter the repeating, robot will listen again

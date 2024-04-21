@@ -20,7 +20,7 @@ import furhatos.flow.kotlin.*
  */
 
 
-val RoleInterest: State = state(Parent) {
+val roleInterest: State = state(Parent) {
 
     //Starting the real questions in the interview
     onEntry {
@@ -32,32 +32,32 @@ val RoleInterest: State = state(Parent) {
     onResponse<MotivatedUser>{
         furhat.say("That sounds really good!")
         //Go to next question
-        goto(HearAboutPosition)
+        goto(hearAboutPosition)
     }
 
     //User answers with unmotivational intent (look nlu)
     onResponse<UnMotivatedUser>{
         furhat.say("Alrighty then, moving on.")
         //Go to next question
-        goto(HearAboutPosition)
+        goto(hearAboutPosition)
     }
 
     //User answers with none of the trigger words/phrases in nlu
     onResponse {
         furhat.say("Okay, that sounds good.")
         //Go to next question
-        goto(HearAboutPosition)
+        goto(hearAboutPosition)
     }
 
     //User doesn't answer, proceed to repetition (look nlu)
     onNoResponse {
         furhat.say("Sorry I could not hear you. Could you repeat that?")
-        goto(RepeatMotivation)
+        goto(repeatMotivation)
     }
 }
 
 //For repetition of motivation question
-val RepeatMotivation: State = state(Parent) {
+val repeatMotivation: State = state(Parent) {
     onEntry {
         //User has 30 seconds to answer
         furhat.listen(timeout = 30000)
@@ -66,20 +66,20 @@ val RepeatMotivation: State = state(Parent) {
     //User responds with motivational intent
     onResponse<MotivatedUser> {
         furhat.say("That sounds really good!")
-        goto(HearAboutPosition)
+        goto(hearAboutPosition)
     }
 
     //User answers with unmotivational intent
     onResponse<UnMotivatedUser> {
         furhat.say("Alrighty then, moving on.")
-        goto(HearAboutPosition)
+        goto(hearAboutPosition)
     }
 
     //User answers with none of the trigger words/phrases in nlu
     onResponse {
         furhat.say("Okay, that sounds good.")
         //Go to next question
-        goto(HearAboutPosition)
+        goto(hearAboutPosition)
     }
 
     //User doesn't respond, proceed anyway
@@ -93,7 +93,7 @@ val RepeatMotivation: State = state(Parent) {
 
 //Question where answer doesn't need to be stored
 // TODO listen to social media variables and reply accordingly
-val HearAboutPosition: State = state(Parent) {
+val hearAboutPosition: State = state(Parent) {
 
     onEntry {
         //User has 30 seconds to answer
@@ -104,19 +104,19 @@ val HearAboutPosition: State = state(Parent) {
     //User answers something random, we proceed to next question
     onResponse {
         furhat.say("Okay well that sounds nice! We are really happy that you are here.")
-        goto(CompanyReason)
+        goto(companyReason)
     }
 
     //User doesn't answer -> Robot asks for repetition
     onNoResponse {
         furhat.say("Could you repeat that?")
-        goto(RepeatHearAboutPosition)
+        goto(repeatHearAboutPosition)
     }
 
 }
 
 //For repetition of "hear about position" question
-val RepeatHearAboutPosition: State = state(Parent) {
+val repeatHearAboutPosition: State = state(Parent) {
     onEntry {
         //User has 30 seconds to answer
         furhat.listen(timeout = 30000)
@@ -125,7 +125,7 @@ val RepeatHearAboutPosition: State = state(Parent) {
     //User responds, we go to next question
     onResponse {
         furhat.say("Okay well that sounds nice! We are really happy that you are here.")
-        goto(CompanyReason)
+        goto(companyReason)
     }
 
     //User doesn't answer, repeat
@@ -136,14 +136,14 @@ val RepeatHearAboutPosition: State = state(Parent) {
     }
 }
 
-val CompanyReason : State = state(Parent) {
+val companyReason : State = state(Parent) {
 
     onEntry {
         furhat.ask("Could you please tell me why would you like to work specifically in our company?")
     }
     onResponse{
         furhat.say("Text")
-        goto(SkillSecIntro)
+        goto(skillSecIntro)
     }
 }
 /*

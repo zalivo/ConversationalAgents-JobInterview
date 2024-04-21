@@ -8,9 +8,9 @@ val Idle: State = state {
         when {
             users.count > 0 -> {
                 furhat.attend(users.random)
-                goto(Start)
+                goto(startConsent)
             }
-            users.count == 0 && furhat.isVirtual() -> goto(Start) // if the skill is run on virtual furhat, ignore if there are no users and start anyway.
+            users.count == 0 && furhat.isVirtual() -> goto(startConsent) // if the skill is run on virtual furhat, ignore if there are no users and start anyway.
             users.count == 0 && !furhat.isVirtual() -> furhat.say("I can't see anyone. Step closer please. ")
         }
     }
@@ -21,6 +21,6 @@ val Idle: State = state {
 
     onUserEnter {
         furhat.attend(it)
-        goto(Start)
+        goto(startConsent)
     }
 }
