@@ -95,6 +95,11 @@ val repeatMotivation: State = state(Parent) {
     }
 }
 
+/**
+ * in positionExpectations and growth we should either created seperated word list that we want to listen for and
+ * probably comment or we could keep the motivated and unMotivatedUser
+ */
+
 val positionExpectations : State = state(Parent){
     onEntry{
         furhat.ask("I'd like to ask you what are your expectations from this position. Not salaray wise but" +
