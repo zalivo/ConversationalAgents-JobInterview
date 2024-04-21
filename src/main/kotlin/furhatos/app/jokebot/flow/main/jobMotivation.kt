@@ -30,14 +30,14 @@ val roleInterest: State = state(Parent) {
     }
 
     //User answers with motivational intent
-    onResponse<motivatedUser>{
+    onResponse<motivatedUser> {
         furhat.say("That sounds really good!")
         //Go to next question
         goto(hearAboutPosition)
     }
 
     //User answers with unmotivational intent (look nlu)
-    onResponse<unMotivatedUser>{
+    onResponse<unMotivatedUser> {
         furhat.say("Alrighty then, moving on.")
         //Go to next question
         goto(hearAboutPosition)
@@ -99,9 +99,11 @@ val hearAboutPosition: State = state(Parent) {
         //User has 30 seconds to answer
         furhat.ask("And where did you hear about this position?", timeout = 30000)
     }
-    onResponse <socialMedia>{
-        furhat.say("We've been working on our public profile there for quite some time so we are glad you found" +
-                "us there.")
+    onResponse<socialMedia> {
+        furhat.say(
+            "We've been working on our public profile there for quite some time so we are glad you found" +
+                    "us there."
+        )
         goto(companyReason)
     }
 
@@ -141,12 +143,12 @@ val repeatHearAboutPosition: State = state(Parent) {
     }
 }
 
-val companyReason : State = state(Parent) {
+val companyReason: State = state(Parent) {
 
     onEntry {
         furhat.ask("Could you please tell me why would you like to work specifically in our company?")
     }
-    onResponse{
+    onResponse {
         furhat.say("Text")
         goto(skillSecIntro)
     }
