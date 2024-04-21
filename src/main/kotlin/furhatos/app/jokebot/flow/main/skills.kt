@@ -73,9 +73,12 @@ val studies: State = state(Parent) {
                     "your studies? Favorite subjects or projects that you have worked on."
         )
     }
-    onResponse {
+    onResponse<Yes> {
         furhat.say("Text")
         goto(personalProjects)
+    }
+    onResponse<No> {
+        furhat.say("Text")
     }
 }
 
@@ -90,8 +93,12 @@ val personalProjects: State = state(Parent) {
                     "project or something else, doesn't have to be commercial."
         )
     }
-    onResponse {
+    onResponse<Yes> {
         furhat.say("Text")
+        goto(internationalSetting)
+    }
+    onResponse<No> {
+        furhat.say("That's unfortunate.")
         goto(internationalSetting)
     }
 }
@@ -103,7 +110,11 @@ val internationalSetting: State = state(Parent) {
                     "jobs. "
         )
     }
-    onResponse {
+    onResponse<Yes> {
+        furhat.say("Text")
+        goto(teamRole)
+    }
+    onResponse<No> {
         furhat.say("Text")
         goto(teamRole)
     }

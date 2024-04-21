@@ -33,7 +33,7 @@ val roleInterest: State = state(Parent) {
     onResponse<motivatedUser> {
         furhat.say("That sounds really good!")
         //Go to next question
-        goto(hearAboutPosition)
+        goto(positionExpectations)
     }
 
     //User answers with unmotivational intent (look nlu)
@@ -43,14 +43,14 @@ val roleInterest: State = state(Parent) {
     onResponse<unMotivatedUser> {
         furhat.say("Alrighty then, moving on.")
         //Go to next question
-        goto(hearAboutPosition)
+        goto(positionExpectations)
     }
 
     //User answers with none of the trigger words/phrases in nlu
     onResponse {
         furhat.say("Okay, that sounds good.")
         //Go to next question
-        goto(hearAboutPosition)
+        goto(positionExpectations)
     }
 
     //User doesn't answer, proceed to repetition (look nlu)
@@ -70,20 +70,20 @@ val repeatMotivation: State = state(Parent) {
     //User responds with motivational intent
     onResponse<motivatedUser> {
         furhat.say("That sounds really good!")
-        goto(hearAboutPosition)
+        goto(positionExpectations)
     }
 
     //User answers with unmotivational intent
     onResponse<unMotivatedUser> {
         furhat.say("Alrighty then, moving on.")
-        goto(hearAboutPosition)
+        goto(positionExpectations)
     }
 
     //User answers with none of the trigger words/phrases in nlu
     onResponse {
         furhat.say("Okay, that sounds good.")
         //Go to next question
-        goto(hearAboutPosition)
+        goto(positionExpectations)
     }
 
     //User doesn't respond, proceed anyway
@@ -92,6 +92,25 @@ val repeatMotivation: State = state(Parent) {
         //We re-enter the repeating, robot will listen again
         //User can then repeat their answer
         reentry()
+    }
+}
+
+val positionExpectations : State = state(Parent){
+    onEntry{
+        furhat.ask("I'd like to ask you what are your expectations from this position. Not salaray wise but" +
+                "rather about the experience you can get or projects you might work on.")
+    }
+    onResponse<motivatedUser>{
+        goto(growth)
+    }
+}
+
+val growth : State = state(Parent){
+    onEntry{
+        furhat.ask("How do you think this position will improve your professional and personal skills?")
+    }
+    onResponse{
+        goto(hearAboutPosition)
     }
 }
 
