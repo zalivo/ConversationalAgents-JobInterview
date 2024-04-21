@@ -11,8 +11,7 @@ val startConsent : State = state(Parent) {
     onEntry {
         furhat.ask("Hi there. Welcome to this job interview for the IT junior position at our company. My name is Johnny," +
                 "and I am going to lead this interview. Before we start with the interview I would like to say," +
-                "that this interview is going to be recorded and sent to our HR team for further evaluation." +
-                "Do you give consent for this interview to be recorded?")
+                "that this interview is going to be recorded and sent to our HR team for further evaluation. Do you give consent for this interview to be recorded?")
     }
     onResponse {
         furhat.say("Text")

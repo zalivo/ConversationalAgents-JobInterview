@@ -1,8 +1,9 @@
 package furhatos.app.jokebot.flow.main
 
 import furhatos.app.jokebot.flow.Parent
-import furhatos.app.jokebot.nlu.MotivatedUser
-import furhatos.app.jokebot.nlu.UnMotivatedUser
+import furhatos.app.jokebot.nlu.motivatedUser
+import furhatos.app.jokebot.nlu.socialMedia
+import furhatos.app.jokebot.nlu.unMotivatedUser
 import furhatos.flow.kotlin.*
 
 /**
@@ -29,14 +30,14 @@ val roleInterest: State = state(Parent) {
     }
 
     //User answers with motivational intent
-    onResponse<MotivatedUser>{
+    onResponse<motivatedUser>{
         furhat.say("That sounds really good!")
         //Go to next question
         goto(hearAboutPosition)
     }
 
     //User answers with unmotivational intent (look nlu)
-    onResponse<UnMotivatedUser>{
+    onResponse<unMotivatedUser>{
         furhat.say("Alrighty then, moving on.")
         //Go to next question
         goto(hearAboutPosition)
@@ -64,13 +65,13 @@ val repeatMotivation: State = state(Parent) {
     }
 
     //User responds with motivational intent
-    onResponse<MotivatedUser> {
+    onResponse<motivatedUser> {
         furhat.say("That sounds really good!")
         goto(hearAboutPosition)
     }
 
     //User answers with unmotivational intent
-    onResponse<UnMotivatedUser> {
+    onResponse<unMotivatedUser> {
         furhat.say("Alrighty then, moving on.")
         goto(hearAboutPosition)
     }
@@ -92,12 +93,16 @@ val repeatMotivation: State = state(Parent) {
 }
 
 //Question where answer doesn't need to be stored
-// TODO listen to social media variables and reply accordingly
 val hearAboutPosition: State = state(Parent) {
 
     onEntry {
         //User has 30 seconds to answer
         furhat.ask("And where did you hear about this position?", timeout = 30000)
+    }
+    onResponse <socialMedia>{
+        furhat.say("We've been working on our public profile there for quite some time so we are glad you found" +
+                "us there.")
+        goto(companyReason)
     }
 
     //ADD SOCIAL MEDIA ANSWER

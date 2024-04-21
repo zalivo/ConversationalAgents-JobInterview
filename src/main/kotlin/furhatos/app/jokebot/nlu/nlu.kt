@@ -28,7 +28,7 @@ class BadJoke: Intent() {
 
 //Intent for motivated user
 //Answer to question "Why does this role interest you?"
-class MotivatedUser: Intent() {
+class motivatedUser: Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
             "I am looking forward to", "I am motivated"
@@ -36,7 +36,7 @@ class MotivatedUser: Intent() {
     }
 }
 
-class UnMotivatedUser: Intent() {
+class unMotivatedUser: Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
             "I am interested because of the money", "Money", "Not interested", "Why would I be interested"
@@ -47,7 +47,7 @@ class UnMotivatedUser: Intent() {
 /**
  * This we could use when the user is asked where did he hear about this position.
  */
-class SocialMedia : Intent(){
+class socialMedia : Intent(){
     override fun getExamples(lang: Language): List<String>{
         return listOf(
         "Instagram", "TikTok", "Snapchat", "Twitter", "Facebook", "LinkedIn", "YouTube", "Pinterest", "Reddit", "Clubhouse", "Discord", "WhatsApp", "Telegram", "WeChat", "Twitch")
