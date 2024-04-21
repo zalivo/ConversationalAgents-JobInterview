@@ -10,15 +10,15 @@ import furhatos.util.Language
 /**
  * Do we need to keep the classes GoodJoke and BadJoke?
  */
-class GoodJoke: Intent() {
+class GoodJoke : Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
-                "Good one", "I like it", "good joke", "very funny", "hilarious", "haha", "great joke", "amazing"
+            "Good one", "I like it", "good joke", "very funny", "hilarious", "haha", "great joke", "amazing"
         )
     }
 }
 
-class BadJoke: Intent() {
+class BadJoke : Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
             "not funny", "not that funny", "not good", "not so good", "bad joke", "terrible"
@@ -28,18 +28,107 @@ class BadJoke: Intent() {
 
 //Intent for motivated user
 //Answer to question "Why does this role interest you?"
-class motivatedUser: Intent() {
+class motivatedUser : Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
-            "I am looking forward to", "I am motivated"
+            "I am looking forward to",
+            "I am motivated",
+            "Passion",
+            "Excited",
+            "Challenging",
+            "Growth",
+            "Opportunity",
+            "Skills",
+            "Experience",
+            "Team",
+            "Culture",
+            "Contribution",
+            "Learning",
+            "Development",
+            "Progression",
+            "Alignment",
+            "Mission",
+            "Vision",
+            "Innovation",
+            "Impact",
+            "Responsibility",
+            "Motivated",
+            "Interest",
+            "Enthusiasm",
+            "Engagement",
+            "Commitment",
+            "Dedication",
+            "Ambition",
+            "Fulfillment",
+            "Success",
+            "Achievement",
+            "Recognition",
+            "Collaboration",
+            "Empowerment",
+            "Self-improvement",
+            "Value",
+            "Alignment",
+            "Inspiration",
+            "Creativity",
+            "Problem-solving",
+            "Initiative",
+            "Drive",
+            "Curiosity",
+            "Aspiration",
+            "Advancement"
         )
     }
 }
 
-class unMotivatedUser: Intent() {
+class unMotivatedUser : Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
-            "I am interested because of the money", "Money", "Not interested", "Why would I be interested"
+            "I am interested because of the money",
+            "Money",
+            "Not interested",
+            "Why would I be interested",
+            "Duty",
+            "Job",
+            "Salary",
+            "Routine",
+            "Stability",
+            "Necessity",
+            "Income",
+            "Requirement",
+            "Job security",
+            "Convenience",
+            "Task",
+            "Employment",
+            "Obligation",
+            "Hours",
+            "Location",
+            "Conformity",
+            "Basic",
+            "Minimal",
+            "Tolerable",
+            "Acceptable",
+            "Neutral",
+            "Okay",
+            "Just",
+            "Fine",
+            "Passable",
+            "Endurance",
+            "Resigned",
+            "Compromise",
+            "Satisfactory",
+            "Manageable",
+            "Bearable",
+            "Indifference",
+            "Minimum",
+            "Lowest",
+            "Least",
+            "Subdued",
+            "Content",
+            "Existence",
+            "Survival",
+            "Practical",
+            "Ordinary",
+            "Commonplace"
         )
     }
 }
@@ -47,9 +136,24 @@ class unMotivatedUser: Intent() {
 /**
  * This we could use when the user is asked where did he hear about this position.
  */
-class socialMedia : Intent(){
-    override fun getExamples(lang: Language): List<String>{
+class socialMedia : Intent() {
+    override fun getExamples(lang: Language): List<String> {
         return listOf(
-        "Instagram", "TikTok", "Snapchat", "Twitter", "Facebook", "LinkedIn", "YouTube", "Pinterest", "Reddit", "Clubhouse", "Discord", "WhatsApp", "Telegram", "WeChat", "Twitch")
+            "Instagram",
+            "TikTok",
+            "Snapchat",
+            "Twitter",
+            "Facebook",
+            "LinkedIn",
+            "YouTube",
+            "Pinterest",
+            "Reddit",
+            "Clubhouse",
+            "Discord",
+            "WhatsApp",
+            "Telegram",
+            "WeChat",
+            "Twitch"
+        )
     }
 }

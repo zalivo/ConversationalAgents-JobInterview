@@ -37,6 +37,9 @@ val roleInterest: State = state(Parent) {
     }
 
     //User answers with unmotivational intent (look nlu)
+    /**
+     * We should think about more ways how we could answer
+     */
     onResponse<unMotivatedUser> {
         furhat.say("Alrighty then, moving on.")
         //Go to next question
