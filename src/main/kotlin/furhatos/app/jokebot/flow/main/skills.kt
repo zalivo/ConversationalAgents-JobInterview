@@ -16,6 +16,9 @@ val skillSecIntro : State = state(Parent) {
         furhat.say("Text")
         goto(pythonCheck)
     }
+    /**
+     * Try to figure out if we can implement 3 minute timer
+     */
     onResponse<No>{
 
     }
