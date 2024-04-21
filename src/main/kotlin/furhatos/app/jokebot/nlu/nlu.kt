@@ -88,28 +88,28 @@ class unMotivatedUser : Intent() {
             "Not interested",
             "Why would I be interested",
             "Duty",
-            "Job",
+            "Job", //Couldn't this one be positive/neutral?
             "Salary",
-            "Routine",
+            "Routine", //Couldn't this one be positive/neutral?
             "Stability",
             "Necessity",
             "Income",
-            "Requirement",
+            "Requirement", //Couldn't this one be positive/neutral?
             "Job security",
             "Convenience",
-            "Task",
+            "Task", //Couldn't this one be positive/neutral?
             "Employment",
             "Obligation",
-            "Hours",
-            "Location",
+            "Hours", //Couldn't this one be positive/neutral?
+            "Location", //Couldn't this one be positive/neutral?
             "Conformity",
             "Basic",
             "Minimal",
             "Tolerable",
             "Acceptable",
             "Neutral",
-            "Okay",
-            "Just",
+            "Okay", //Couldn't this one be positive/neutral?
+            "Just", //Couldn't this one be positive/neutral?
             "Fine",
             "Passable",
             "Endurance",
@@ -126,7 +126,7 @@ class unMotivatedUser : Intent() {
             "Content",
             "Existence",
             "Survival",
-            "Practical",
+            "Practical", //Couldn't this one be positive/neutral?
             "Ordinary",
             "Commonplace"
         )
@@ -154,6 +154,18 @@ class socialMedia : Intent() {
             "Telegram",
             "WeChat",
             "Twitch"
+        )
+    }
+}
+
+class becauseOfCourse : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Conversational agents",
+            "CA",
+            "My friend is taking this course",
+            "asked me to do this interview",
+            "asked me to take this interview"
         )
     }
 }

@@ -10,25 +10,67 @@ val startConsent: State = state(Parent) {
      */
     onEntry {
         furhat.ask(
-            "Hi there. Welcome to this job interview for the IT junior position at our company. My name is Johnny," +
-                    "and I am going to lead this interview. Before we start with the interview I would like to say," +
+            "Hi there. Welcome to this job interview for the IT junior position at our company. My name is Johnny, " +
+                    "and I am going to lead this interview. Before we start with the interview I would like to say, " +
                     "that this interview is going to be recorded and sent to our HR team for further evaluation. Do you give consent for this interview to be recorded?"
         )
     }
-    onResponse<Yes> {
-        furhat.say("Thank you. I will start recording this session.")
-        goto(askName)
-    }
-    onResponse<No> {
-        call(noConsent)
-        reentry()
-    }
+
     onReentry {
-        furhat.ask(
+        furhat.say(
             "Hi there. Welcome to this job interview for the IT junior position at our company. My name is Johnny " +
                     "and I am going to lead this interview."
         )
         goto(askName)
+    }
+
+    onResponse<Yes> {
+        furhat.say("Thank you. I will start recording this session.")
+        goto(askName)
+    }
+
+    onResponse<No> {
+        call(noConsent)
+        reentry()
+    }
+
+    onResponse {
+        furhat.say("Could you be more precise maybe? Is it a yes or a no?")
+        goto(responseConsent)
+    }
+
+    onNoResponse {
+        furhat.say("I couldn't really hear you. Is it a yes or a no?")
+        goto(responseConsent)
+    }
+}
+
+/**
+ * State for handling responses other than "yes" or "no" in startConsent
+ */
+val responseConsent: State = state(Parent) {
+
+    onEntry {
+        furhat.listen()
+    }
+
+    onResponse<Yes> {
+        furhat.say("Thank you. I will start recording this session.")
+        goto(askName)
+    }
+
+    onResponse<No> {
+        goto(noConsent)
+    }
+
+    onResponse {
+        furhat.say("Could you repeat?")
+        reentry()
+    }
+
+    onNoResponse {
+        furhat.say("Could you repeat?")
+        reentry()
     }
 }
 
@@ -39,8 +81,8 @@ val startConsent: State = state(Parent) {
 val noConsent: State = state(Parent) {
     onEntry {
         furhat.ask(
-            "In that case I'm afraid we cannot continue in the interview. Because of this" +
-                    "our HR team will only have a look at the CV and after that decide if you'll be invited into an in person" +
+            "In that case I'm afraid we cannot continue in the interview. Because of this " +
+                    "our HR team will only have a look at the CV and after that decide if you'll be invited to an in person " +
                     "interview. Do you give consent for this interview to be recorded?"
         )
     }
@@ -52,9 +94,10 @@ val noConsent: State = state(Parent) {
     }
     onResponse<No> {
         furhat.say(
-            "In that case I will close this session and let the HR team know that they should have a look" +
+            "In that case I will close this session and let the HR team know that they should have a look " +
                     "at your CV. Have a great day."
         )
+        goto(Idle)
     }
 }
 
@@ -83,7 +126,8 @@ val askName: State = state(Parent) {
      * If the user does not respond, proceed anyway
      */
     onNoResponse {
-        //Add a funny comment
+        furhat.say("I get it, I was also really nervous at my first job interview. " +
+        "I also forgot my own name then.")
         goto(canWeStart)
     }
 }

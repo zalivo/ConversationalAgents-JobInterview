@@ -1,6 +1,7 @@
 package furhatos.app.jokebot.flow.main
 
 import furhatos.app.jokebot.flow.Parent
+import furhatos.app.jokebot.nlu.becauseOfCourse
 import furhatos.app.jokebot.nlu.motivatedUser
 import furhatos.app.jokebot.nlu.socialMedia
 import furhatos.app.jokebot.nlu.unMotivatedUser
@@ -16,9 +17,6 @@ import furhatos.flow.kotlin.*
  * the user's answers.
  */
 
-/** NOTE!! THE CODING HAS BEEN DONE FOR INTERVIEW BOT UNTIL "ROLE INTEREST"
- * QUESTION. KEEP THIS IN MIND WHILE RUNNING THE ROBOT.
- */
 
 
 val roleInterest: State = state(Parent) {
@@ -26,7 +24,7 @@ val roleInterest: State = state(Parent) {
     //Starting the real questions in the interview
     onEntry {
         //User has 30 seconds to answer
-        furhat.ask("Okay now, why does this role interest you?", timeout = 30000)
+        furhat.ask("Okay, so why does this role interest you?", timeout = 30000)
     }
 
     //User answers with motivational intent
@@ -48,7 +46,7 @@ val roleInterest: State = state(Parent) {
 
     //User answers with none of the trigger words/phrases in nlu
     onResponse {
-        furhat.say("Okay, that sounds good.")
+        furhat.say("Okay.")
         //Go to next question
         goto(positionExpectations)
     }
@@ -81,7 +79,7 @@ val repeatMotivation: State = state(Parent) {
 
     //User answers with none of the trigger words/phrases in nlu
     onResponse {
-        furhat.say("Okay, that sounds good.")
+        furhat.say("Okay.")
         //Go to next question
         goto(positionExpectations)
     }
@@ -103,15 +101,29 @@ val repeatMotivation: State = state(Parent) {
 val positionExpectations: State = state(Parent) {
     onEntry {
         furhat.ask(
-            "I'd like to ask you what are your expectations from this position. Not salaray wise but" +
+            "I'd like to ask you what your expectations are from this role. Not salary-wise but " +
                     "rather about the experience you can get or projects you might work on."
         )
     }
+
     onResponse<motivatedUser> {
+        furhat.say("Perfect!")
         goto(growth)
     }
-    onResponse {
+
+    onResponse<unMotivatedUser> {
+        furhat.say("Okay.")
         goto(growth)
+    }
+
+    onResponse {
+        furhat.say("Okay.")
+        goto(growth)
+    }
+
+    onNoResponse {
+        furhat.say("I could not hear you. I'll repeat the question.")
+        reentry()
     }
 }
 
@@ -119,8 +131,15 @@ val growth: State = state(Parent) {
     onEntry {
         furhat.ask("How do you think this position will improve your professional and personal skills?")
     }
+
     onResponse {
+        furhat.say("Okay!")
         goto(hearAboutPosition)
+    }
+
+    onNoResponse {
+        furhat.say("I couldn't hear you. I'll repeat myself.")
+        reentry()
     }
 }
 
@@ -129,20 +148,26 @@ val hearAboutPosition: State = state(Parent) {
 
     onEntry {
         //User has 30 seconds to answer
-        furhat.ask("And where did you hear about this position?", timeout = 30000)
+        furhat.ask("Where did you hear about this position?", timeout = 30000)
     }
+
     onResponse<socialMedia> {
         furhat.say(
-            "We've been working on our public profile there for quite some time so we are glad you found" +
+            "We've been working on our public profile there for quite some time so we are glad that you found" +
                     "us there."
         )
         goto(companyReason)
     }
 
-    //ADD SOCIAL MEDIA ANSWER
+    //If user answers that it's because of this course
+    onResponse<becauseOfCourse> {
+        furhat.say("Haha, yes I know. Let's still pretend this is a job interview.")
+        goto(companyReason)
+    }
+
     //User answers something random, we proceed to next question
     onResponse {
-        furhat.say("Okay well that sounds nice! We are really happy that you are here.")
+        furhat.say("Okay. We are really happy that you are here.")
         goto(companyReason)
     }
 
@@ -161,9 +186,22 @@ val repeatHearAboutPosition: State = state(Parent) {
         furhat.listen(timeout = 30000)
     }
 
+    onResponse<socialMedia> {
+        furhat.say(
+            "We've been working on our public profile there for quite some time so we are glad that you found" +
+                    "us there."
+        )
+        goto(companyReason)
+    }
+
+    onResponse<becauseOfCourse> {
+        furhat.say("Haha, yes I know. Let's still pretend this is a job interview.")
+        goto(companyReason)
+    }
+
     //User responds, we go to next question
     onResponse {
-        furhat.say("Okay well that sounds nice! We are really happy that you are here.")
+        furhat.say("Okay. We are really happy that you are here.")
         goto(companyReason)
     }
 
@@ -178,11 +216,17 @@ val repeatHearAboutPosition: State = state(Parent) {
 val companyReason: State = state(Parent) {
 
     onEntry {
-        furhat.ask("Could you please tell me why would you like to work specifically in our company?")
+        furhat.ask("Could you please tell me why you would like to work specifically at our company?")
     }
+
     onResponse {
-        furhat.say("Text")
+        furhat.say("Alright.")
         goto(skillSecIntro)
+    }
+
+    onNoResponse {
+        furhat.say("I couldn't quite hear you.")
+        reentry()
     }
 }
 /*
