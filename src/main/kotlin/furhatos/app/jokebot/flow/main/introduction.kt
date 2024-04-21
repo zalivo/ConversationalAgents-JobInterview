@@ -16,13 +16,19 @@ val startConsent: State = state(Parent) {
         )
     }
     onResponse<Yes> {
-        furhat.say("Text")
+        furhat.say("Thank you. I will start recording this session.")
         goto(askName)
     }
-    onResponse<No>{
-        furhat.say("That's a shame. In that case I'm afraid we cannot continue in the interview. Because of this" +
-                "our HR team will only have a look at the CV and after that decide if you'll be invited into a real interview." +
-                "Are you sure don't want to proceed with this interview? ")
+    onResponse<No> {
+        call(noConsent)
+        reentry()
+    }
+    onReentry {
+        furhat.ask(
+            "Hi there. Welcome to this job interview for the IT junior position at our company. My name is Johnny " +
+                    "and I am going to lead this interview."
+        )
+        goto(askName)
     }
 }
 
@@ -30,14 +36,32 @@ val startConsent: State = state(Parent) {
  * No recording consent given.
  * The interview ends here.
  */
-val noConsent : State = state(Parent){
-
+val noConsent: State = state(Parent) {
+    onEntry {
+        furhat.ask(
+            "In that case I'm afraid we cannot continue in the interview. Because of this" +
+                    "our HR team will only have a look at the CV and after that decide if you'll be invited into an in person" +
+                    "interview. Do you give consent for this interview to be recorded?"
+        )
+    }
+    onResponse<Yes> {
+        furhat.say(
+            "Thank you, I will start recording the interview right now."
+        )
+        terminate()
+    }
+    onResponse<No> {
+        furhat.say(
+            "In that case I will close this session and let the HR team know that they should have a look" +
+                    "at your CV. Have a great day."
+        )
+    }
 }
 
-val askName : State = state(Parent) {
+val askName: State = state(Parent) {
 
     onEntry {
-        furhat.ask("Perfect, what is your name?")
+        furhat.ask("What is your name?")
     }
     /**
      * Says "Nice to meet you *user name*
