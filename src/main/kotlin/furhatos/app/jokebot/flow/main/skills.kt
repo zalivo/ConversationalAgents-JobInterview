@@ -51,7 +51,7 @@ val pythonCheck: State = state(Parent) {
     }
 
     onResponse<No> {
-        furhat.say({
+        furhat.say {
             random {
                 +"That's okay! We have resources and support to help you get up to speed."
                 +"No worries! Many programming concepts are transferable between languages. Your experience with other languages might give you a unique perspective when learning Python."
@@ -64,7 +64,7 @@ val pythonCheck: State = state(Parent) {
                 +"We believe in continuous learning and personal growth. If you're motivated to learn Python, we'll provide the resources and support you need."
                 +"While Python experience is beneficial, problem-solving skills and a strong foundation in programming principles are equally important. We value diverse experiences and perspectives."
             }
-        })
+        }
         goto(programmingLanguages)
     }
 }

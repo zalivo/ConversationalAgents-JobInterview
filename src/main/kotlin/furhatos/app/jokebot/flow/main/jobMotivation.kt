@@ -108,6 +108,9 @@ val positionExpectations : State = state(Parent){
     onResponse<motivatedUser>{
         goto(growth)
     }
+    onResponse{
+        goto(growth)
+    }
 }
 
 val growth : State = state(Parent){
