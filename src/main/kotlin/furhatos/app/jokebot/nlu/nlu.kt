@@ -7,6 +7,9 @@ package furhatos.app.jokebot.nlu
 import furhatos.nlu.Intent
 import furhatos.util.Language
 
+/**
+ * Do we need to keep the classes GoodJoke and BadJoke?
+ */
 class GoodJoke: Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
