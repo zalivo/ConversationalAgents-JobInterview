@@ -5,6 +5,7 @@ import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.onResponse
 import furhatos.flow.kotlin.state
+import furhatos.nlu.common.No
 
 val skillSecIntro : State = state(Parent) {
 
@@ -14,6 +15,9 @@ val skillSecIntro : State = state(Parent) {
     onResponse{
         furhat.say("Text")
         goto(pythonCheck)
+    }
+    onResponse<No>{
+
     }
 }
 
