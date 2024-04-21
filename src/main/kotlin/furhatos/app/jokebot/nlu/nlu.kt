@@ -40,3 +40,13 @@ class UnMotivatedUser: Intent() {
         )
     }
 }
+
+/**
+ * This we could use when the user is asked where did he hear about this position.
+ */
+class SocialMedia : Intent(){
+    override fun getExamples(lang: Language): List<String>{
+        return listOf(
+        "Instagram", "TikTok", "Snapchat", "Twitter", "Facebook", "LinkedIn", "YouTube", "Pinterest", "Reddit", "Clubhouse", "Discord", "WhatsApp", "Telegram", "WeChat", "Twitch")
+    }
+}
