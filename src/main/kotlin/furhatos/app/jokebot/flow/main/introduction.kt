@@ -81,14 +81,14 @@ val responseConsent: State = state(Parent) {
 val noConsent: State = state(Parent) {
     onEntry {
         furhat.ask(
-            "In that case I'm afraid we cannot continue in the interview. Because of this " +
-                    "our HR team will only have a look at the CV and after that decide if you'll be invited to an in person " +
+            "In that case I'm afraid we cannot continue in the interview. Because of this, " +
+                    "our HR team will only have a look at your CV and after that decide if you'll be invited to an in person " +
                     "interview. Do you give consent for this interview to be recorded?"
         )
     }
     onResponse<Yes> {
         furhat.say(
-            "Thank you, I will start recording the interview right now."
+            "Thank you. I will start recording the interview right now."
         )
         terminate()
     }
@@ -189,7 +189,7 @@ val tellMeAboutYourself: State = state(Parent) {
      * User responds something, proceed
      */
     onResponse {
-        furhat.say("That sounds really interesting!")
+        furhat.say("That sounds interesting!")
         goto(roleInterest)
     }
 
@@ -214,7 +214,7 @@ val repeatAboutYourself: State = state(Parent) {
      * User answers something, proceed
      */
     onResponse {
-        furhat.say("That sounds really interesting!")
+        furhat.say("That sounds interesting!")
         goto(roleInterest)
     }
 

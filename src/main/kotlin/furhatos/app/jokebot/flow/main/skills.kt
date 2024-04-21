@@ -21,7 +21,7 @@ val skillSecIntro: State = state(Parent) {
     }
 
     onResponse<No> {
-        furhat.say("Well we still need to continue.")
+        furhat.say("Well, we still need to continue.")
         goto(pythonCheck)
         //furhat.say("In that case, we can take a short 3-minute break. Hopefully, we could continue right after.")
 
@@ -164,7 +164,7 @@ val studies: State = state(Parent) {
 val personalProjects: State = state(Parent) {
     onEntry {
         furhat.ask(
-            "Do you have any personal projects that you have worked on? Could be some personal programming" +
+            "Do you have any personal projects that you have worked on? Could be some personal programming " +
                     "project or something else, doesn't have to be commercial."
         )
     }
@@ -195,8 +195,8 @@ val internationalSetting: State = state(Parent) {
 
     onEntry {
         furhat.ask(
-            "Have you ever worked in an international setting? Could be in school or at previous" +
-                    "jobs. "
+            "Have you ever worked in an international setting? Could be in school or at previous " +
+                    "jobs."
         )
     }
 
@@ -236,7 +236,7 @@ val teamRole: State = state(Parent) {
     }
 
     onResponse {
-        furhat.say("Okay! I see.")
+        furhat.say("Okay. I see.")
         goto(endSecIntro)
     }
 

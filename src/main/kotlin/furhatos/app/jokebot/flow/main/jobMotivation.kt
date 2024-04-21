@@ -153,7 +153,7 @@ val hearAboutPosition: State = state(Parent) {
 
     onResponse<socialMedia> {
         furhat.say(
-            "We've been working on our public profile there for quite some time so we are glad that you found" +
+            "We've been working on our public profile there for quite some time so we are glad that you found " +
                     "us there."
         )
         goto(companyReason)
@@ -161,7 +161,7 @@ val hearAboutPosition: State = state(Parent) {
 
     //If user answers that it's because of this course
     onResponse<becauseOfCourse> {
-        furhat.say("Haha, yes I know. Let's still pretend this is a job interview.")
+        furhat.say("Haha yes, I know. Let's still pretend this is a job interview.")
         goto(companyReason)
     }
 
@@ -188,14 +188,14 @@ val repeatHearAboutPosition: State = state(Parent) {
 
     onResponse<socialMedia> {
         furhat.say(
-            "We've been working on our public profile there for quite some time so we are glad that you found" +
+            "We've been working on our public profile there for quite some time so we are glad that you found " +
                     "us there."
         )
         goto(companyReason)
     }
 
     onResponse<becauseOfCourse> {
-        furhat.say("Haha, yes I know. Let's still pretend this is a job interview.")
+        furhat.say("Haha yes, I know. Let's still pretend this is a job interview.")
         goto(companyReason)
     }
 
