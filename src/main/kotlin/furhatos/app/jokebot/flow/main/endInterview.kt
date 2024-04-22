@@ -49,13 +49,16 @@ val anyQuestions: State = state(Parent) {
     }
 }
 
-
+/**
+ * After this interview we should have some ending so that the bot stops listening
+ */
 val realInterviewEnd: State = state(Parent) {
     onEntry {
-        furhat.ask(
+        furhat.say(
             "Thank you for this interview, it has been a pleasure. Our HR team will evaluate this interview " +
                     "and they will let you know if you will be invited to an in person interview. Thank you and have a " +
                     "great day."
         )
+        goto(Idle)
     }
 }

@@ -45,7 +45,9 @@ val skillSecIntro: State = state(Parent) {
         //furhat.say("I hope the little break has helped. Can we continue now?")
     }
 
-
+/**
+ * If the person mentions projects here we could ask what kind of python projects they worked on
+ */
 val pythonCheck: State = state(Parent) {
     onEntry {
         furhat.ask(
