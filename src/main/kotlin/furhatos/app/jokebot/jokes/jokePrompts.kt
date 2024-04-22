@@ -98,3 +98,11 @@ val continuePrompt = listOf(
 private val generalNoResponse = listOf(
     ""
 )
+
+private val generalYesResponse = listOf(
+    ""
+)
+
+private val backChanneling = listOf(
+    ""
+)
