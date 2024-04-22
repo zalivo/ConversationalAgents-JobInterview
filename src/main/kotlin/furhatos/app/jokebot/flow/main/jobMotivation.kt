@@ -18,7 +18,6 @@ import furhatos.flow.kotlin.*
  */
 
 
-
 val roleInterest: State = state(Parent) {
 
     //Starting the real questions in the interview
@@ -151,10 +150,12 @@ val hearAboutPosition: State = state(Parent) {
         furhat.ask("Where did you hear about this position?", timeout = 30000)
     }
 
+    /**
+     * it.intent doesn't work, should have a look at it later
+     */
     onResponse<socialMedia> {
         furhat.say(
-            "We've been working on our public profile there for quite some time so we are glad that you found " +
-                    "us there."
+            "We've been working on our public profile on" + it.intent +"for quite some time so we are glad that you found us there."
         )
         goto(companyReason)
     }
