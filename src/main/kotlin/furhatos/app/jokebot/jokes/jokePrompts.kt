@@ -94,3 +94,7 @@ val continuePrompt = listOf(
     "Should I go on?",
     "Would you like another one?"
 )
+
+private val generalNoResponse = listOf(
+    ""
+)

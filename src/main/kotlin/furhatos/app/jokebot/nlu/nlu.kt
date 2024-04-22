@@ -169,3 +169,11 @@ class becauseOfCourse : Intent() {
         )
     }
 }
+
+class confusedUser : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "What do you want to know", "confused",
+        )
+    }
+}

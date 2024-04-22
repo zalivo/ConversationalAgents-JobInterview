@@ -1,6 +1,7 @@
 package furhatos.app.jokebot.flow.main
 
 import furhatos.app.jokebot.flow.Parent
+import furhatos.app.jokebot.nlu.confusedUser
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.No
 import furhatos.nlu.common.Yes
@@ -27,8 +28,8 @@ val skillSecIntro: State = state(Parent) {
 
         // Set a timer for 10 seconds (10000 milliseconds)
         //onTime(delay = 180000) {
-            //furhat.say("Ten seconds have passed.")
-            //reentry()
+        //furhat.say("Ten seconds have passed.")
+        //reentry()
     }
 
     onResponse {
@@ -42,8 +43,8 @@ val skillSecIntro: State = state(Parent) {
     }
 
     //onReentry {
-        //furhat.say("I hope the little break has helped. Can we continue now?")
-    }
+    //furhat.say("I hope the little break has helped. Can we continue now?")
+}
 
 /**
  * If the person mentions projects here we could ask what kind of python projects they worked on
@@ -52,7 +53,8 @@ val pythonCheck: State = state(Parent) {
     onEntry {
         furhat.ask(
             "Since previous experience with Python would be appreciated for this position, " +
-            "I would like to ask you if you have programmed in Python before?")
+                    "I would like to ask you if you have programmed in Python before?"
+        )
     }
 
     onResponse<Yes> {
@@ -93,25 +95,25 @@ val pythonCheck: State = state(Parent) {
     }
 }
 
-val pythonProjectExperience : State = state(Parent){
-    onEntry{
+val pythonProjectExperience: State = state(Parent) {
+    onEntry {
         furhat.ask("Could you elaborate on that?")
     }
-    onResponse{
+    onResponse {
         furhat.say("That sounds interesting.")
         goto(programmingLanguages)
     }
-    onResponse<Yes>{
+    onResponse<Yes> {
         furhat.say("Alright, then tell me about it.")
         goto(pythonProjectExperienceYes)
     }
-    onResponse<No>{
+    onResponse<No> {
         furhat.say("That's weird")
         goto(programmingLanguages)
     }
 }
 
-val pythonProjectExperienceYes : State = state(Parent){
+val pythonProjectExperienceYes: State = state(Parent) {
     onEntry {
         furhat.say("That sounds interesting.")
         goto(programmingLanguages)
@@ -160,13 +162,14 @@ val programmingLanguages: State = state(Parent) {
  */
 val studies: State = state(Parent) {
     onEntry {
-        furhat.ask("Could you tell me more about your studies? Maybe about your favorite subjects " +
-                "or projects that you have worked on."
+        furhat.ask(
+            "Could you tell me more about your studies? Maybe about your favorite subjects " +
+                    "or projects that you have worked on."
         )
 
         //furhat.ask(
-            //"In your CV you mentioned you study at University of Twente. Could you tell me more about" +
-                    //"your studies? Favorite subjects or projects that you have worked on."
+        //"In your CV you mentioned you study at University of Twente. Could you tell me more about" +
+        //"your studies? Favorite subjects or projects that you have worked on."
         //)
     }
 
@@ -195,19 +198,46 @@ val personalProjects: State = state(Parent) {
 
     //For now, no further questions about this
     onResponse<Yes> {
-        furhat.say("That is perfect. You have some relevant experience then!")
-        goto(internationalSetting)
+        furhat.say("That is perfect.")
+        goto(personalProjectElaborate)
     }
-
+    /**
+     *
+     */
     onResponse<No> {
         furhat.say("That's unfortunate.")
         goto(internationalSetting)
+    }
+
+    onResponse<confusedUser> {
+        furhat.say(
+            "You could tell me what specific things did you do in the project or how long did it take you." +
+                    "Just some basic information."
+        )
     }
 
     onResponse {
         furhat.say("Alright!")
         goto(internationalSetting)
     }
+    onNoResponse {
+        furhat.say("I couldn't hear you. I'll repeat my question.")
+        reentry()
+    }
+}
+
+val personalProjectElaborate: State = state(Parent) {
+    onEntry {
+        furhat.ask(
+            "We are looking for someone who also has some personal projects running." +
+                    "Please tell me more about those projects."
+        )
+    }
+    onResponse {
+        furhat.say("That's impressive.")
+        goto(internationalSetting)
+    }
+
     onNoResponse {
         furhat.say("I couldn't hear you. I'll repeat my question.")
         reentry()
@@ -224,14 +254,18 @@ val internationalSetting: State = state(Parent) {
     }
 
     onResponse<Yes> {
-        furhat.say("Okay, that sounds good. This is something that we view as a crucial " +
-        "thing at our company.")
+        furhat.say(
+            "Okay, that sounds good. This is something that we view as a crucial " +
+                    "thing at our company."
+        )
         goto(teamRole)
     }
 
     onResponse<No> {
-        furhat.say("Okay! But if you are comfortable working in an international work environment, " +
-                "you could fit in well here.")
+        furhat.say(
+            "Okay! But if you are comfortable working in an international work environment, " +
+                    "you could fit in well here."
+        )
         goto(teamRole)
     }
 

@@ -1,6 +1,7 @@
 package furhatos.app.jokebot.flow.main
 
 import furhatos.app.jokebot.flow.Parent
+import furhatos.app.jokebot.nlu.confusedUser
 import furhatos.nlu.common.*
 import furhatos.flow.kotlin.*
 
@@ -199,6 +200,9 @@ val tellMeAboutYourself: State = state(Parent) {
     onNoResponse {
         furhat.say("I can't really hear you. Could you repeat that?")
         goto(repeatAboutYourself)
+    }
+    onResponse<confusedUser>{
+        furhat.say("Just tell me any basic background about yourself - hobbies, school and stuff")
     }
 }
 
