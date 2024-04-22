@@ -6,28 +6,82 @@ import furhatos.app.jokebot.nlu.motivatedUser
 import furhatos.app.jokebot.nlu.socialMedia
 import furhatos.app.jokebot.nlu.unMotivatedUser
 import furhatos.flow.kotlin.*
+import furhatos.gestures.*
+import furhatos.gestures.CharParams.*
 
-/**
- * This state gets jokes, tells jokes, and records the user's response to it.
- *
- * Once the joke has been told, prompts the user if they want to hear another joke.
- */
 
 /** In interview bot we want to proceed with questions and respond according to
  * the user's answers.
  */
+
+val reset = defineGesture("reset") {
+    frame(0.0) {
+        // Reset all facial features to their default positions
+        CHEEK_BONES_DOWN to 0.0
+        CHEEK_BONES_NARROWER to 0.0
+        CHEEK_BONES_UP to 0.0
+        CHEEK_BONES_WIDER to 0.0
+        CHEEK_FULLER to 0.0
+        CHEEK_THINNER to 0.0
+        CHIN_DOWN to 0.0
+        CHIN_NARROWER to 0.0
+        CHIN_UP to 0.0
+        CHIN_WIDER to 0.0
+        EYEBROW_DOWN to 0.0
+        EYEBROW_LARGER to 0.0
+        EYEBROW_NARROWER to 0.0
+        EYEBROW_SMALLER to 0.0
+        EYEBROW_TILT_DOWN to 0.0
+        EYEBROW_TILT_UP to 0.0
+        EYEBROW_UP to 0.0
+        EYEBROW_WIDER to 0.0
+        EYES_DOWN to 0.0
+        EYES_NARROWER to 0.0
+        EYES_SCALE_DOWN to 0.0
+        EYES_SCALE_UP to 0.0
+        EYES_TILT_DOWN to 0.0
+        EYES_TILT_UP to 0.0
+        EYES_UP to 0.0
+        EYES_WIDER to 0.0
+        MOUTH_DOWN to 0.0
+        MOUTH_FLATTER to 0.0
+        MOUTH_NARROWER to 0.0
+        MOUTH_SCALE to 0.0
+        MOUTH_UP to 0.0
+        MOUTH_WIDER to 0.0
+        NOSE_DOWN to 0.0
+        NOSE_NARROWER to 0.0
+        NOSE_UP to 0.0
+        NOSE_WIDER to 0.0
+        LIP_BOTTOM_THICKER to 0.0
+        LIP_BOTTOM_THINNER to 0.0
+        LIP_TOP_THICKER to 0.0
+        LIP_TOP_THINNER to 0.0
+    }
+}
+
+val curiosity = defineGesture("curiosity") {
+    frame(0.1, 0.5) {
+        EYEBROW_UP to 1.0
+        EYES_WIDER to -0.25
+        MOUTH_UP to 0.5
+    }
+    reset(2.0)
+}
 
 
 val roleInterest: State = state(Parent) {
 
     //Starting the real questions in the interview
     onEntry {
+        furhat.gesture(Gestures.BrowRaise)
         //User has 30 seconds to answer
         furhat.ask("Okay, so why does this role interest you?", timeout = 30000)
     }
 
     //User answers with motivational intent
     onResponse<motivatedUser> {
+        furhat.gesture(Gestures.Smile)
         furhat.say("That sounds really good!")
         //Go to next question
         goto(positionExpectations)
@@ -38,6 +92,7 @@ val roleInterest: State = state(Parent) {
      * We should think about more ways how we could answer
      */
     onResponse<unMotivatedUser> {
+        furhat.gesture(Gestures.GazeAway(duration = 1.5))
         furhat.say("Alrighty then, moving on.")
         //Go to next question
         goto(positionExpectations)
@@ -52,6 +107,7 @@ val roleInterest: State = state(Parent) {
 
     //User doesn't answer, proceed to repetition (look nlu)
     onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
         furhat.say("Sorry I could not hear you. Could you repeat that?")
         goto(repeatMotivation)
     }
@@ -66,12 +122,14 @@ val repeatMotivation: State = state(Parent) {
 
     //User responds with motivational intent
     onResponse<motivatedUser> {
+        furhat.gesture(Gestures.Smile)
         furhat.say("That sounds really good!")
         goto(positionExpectations)
     }
 
     //User answers with unmotivational intent
     onResponse<unMotivatedUser> {
+        furhat.gesture(Gestures.GazeAway(duration = 1.5))
         furhat.say("Alrighty then, moving on.")
         goto(positionExpectations)
     }
@@ -85,6 +143,7 @@ val repeatMotivation: State = state(Parent) {
 
     //User doesn't respond, proceed anyway
     onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
         furhat.say("I couldn't hear you now either. Could you repeat that?")
         //We re-enter the repeating, robot will listen again
         //User can then repeat their answer
@@ -98,7 +157,9 @@ val repeatMotivation: State = state(Parent) {
  */
 
 val positionExpectations: State = state(Parent) {
+
     onEntry {
+        furhat.gesture(curiosity)
         furhat.ask(
             "I'd like to ask you what your expectations are from this role. Not salary-wise but " +
                     "rather about the experience you can get or projects you might work on."
@@ -106,11 +167,13 @@ val positionExpectations: State = state(Parent) {
     }
 
     onResponse<motivatedUser> {
+        furhat.gesture(Gestures.Smile)
         furhat.say("Perfect!")
         goto(growth)
     }
 
     onResponse<unMotivatedUser> {
+        furhat.gesture(Gestures.BrowFrown(duration = 0.5))
         furhat.say("Okay.")
         goto(growth)
     }
@@ -128,6 +191,7 @@ val positionExpectations: State = state(Parent) {
 
 val growth: State = state(Parent) {
     onEntry {
+        furhat.gesture(curiosity)
         furhat.ask("How do you think this position will improve your professional and personal skills?")
     }
 
@@ -154,15 +218,16 @@ val hearAboutPosition: State = state(Parent) {
      * it.intent doesn't work, should have a look at it later
      */
     onResponse<socialMedia> {
-        furhat.say(
-            "We've been working on our public profile on" + it.intent +"for quite some time so we are glad that you found us there."
-        )
+        furhat.say("We've been working on our public profile on" + it.intent +"for quite some time")
+        furhat.gesture(Gestures.Surprise)
+        furhat.say("so we are glad that you found us there.")
         goto(companyReason)
     }
 
     //If user answers that it's because of this course
     onResponse<becauseOfCourse> {
-        furhat.say("Haha yes, I know. Let's still pretend this is a job interview.")
+        furhat.gesture(Gestures.BigSmile)
+        furhat.say("Hahaa, yes, I know. Let's still pretend this is a job interview.")
         goto(companyReason)
     }
 
@@ -188,15 +253,14 @@ val repeatHearAboutPosition: State = state(Parent) {
     }
 
     onResponse<socialMedia> {
-        furhat.say(
-            "We've been working on our public profile there for quite some time so we are glad that you found " +
-                    "us there."
-        )
+        furhat.say("We've been working on our public profile there for quite some time")
+        furhat.gesture(Gestures.Surprise, async=false)
+        furhat.say("so we are glad that you found us there.")
         goto(companyReason)
     }
 
     onResponse<becauseOfCourse> {
-        furhat.say("Haha yes, I know. Let's still pretend this is a job interview.")
+        furhat.say("Hahaa, yes, I know. Let's still pretend this is a job interview.")
         goto(companyReason)
     }
 

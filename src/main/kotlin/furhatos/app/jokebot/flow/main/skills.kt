@@ -3,6 +3,7 @@ package furhatos.app.jokebot.flow.main
 import furhatos.app.jokebot.flow.Parent
 import furhatos.app.jokebot.nlu.confusedUser
 import furhatos.flow.kotlin.*
+import furhatos.gestures.Gestures
 import furhatos.nlu.common.No
 import furhatos.nlu.common.Yes
 
@@ -13,10 +14,12 @@ val skillSecIntro: State = state(Parent) {
      * TODO THE TIMER DOESN'T WORK
      */
     onEntry {
+        furhat.gesture(Gestures.BrowRaise)
         furhat.ask("Now I would like to talk about your skills and experience. Can we proceed?")
     }
 
     onResponse<Yes> {
+        furhat.gesture(Gestures.Smile)
         furhat.say("Perfect!")
         goto(pythonCheck)
     }
@@ -33,11 +36,13 @@ val skillSecIntro: State = state(Parent) {
     }
 
     onResponse {
+        furhat.gesture(Gestures.Nod)
         furhat.say("I'll take that as a yes.")
         goto(pythonCheck)
     }
 
     onNoResponse {
+        furhat.gesture(Gestures.Nod)
         furhat.say("I'll take that as a yes.")
         goto(pythonCheck)
     }
@@ -58,6 +63,7 @@ val pythonCheck: State = state(Parent) {
     }
 
     onResponse<Yes> {
+        furhat.gesture(Gestures.Surprise)
         furhat.say("Amazing!")
         goto(pythonProjectExperience)
     }
@@ -90,6 +96,7 @@ val pythonCheck: State = state(Parent) {
     }
 
     onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
         furhat.say("I couldn't hear you.")
         reentry()
     }
@@ -97,9 +104,11 @@ val pythonCheck: State = state(Parent) {
 
 val pythonProjectExperience: State = state(Parent) {
     onEntry {
+        furhat.gesture(Gestures.Thoughtful)
         furhat.ask("Could you elaborate on that?")
     }
     onResponse {
+        furhat.gesture(Gestures.Smile)
         furhat.say("That sounds interesting.")
         goto(programmingLanguages)
     }
@@ -108,6 +117,7 @@ val pythonProjectExperience: State = state(Parent) {
         goto(pythonProjectExperienceYes)
     }
     onResponse<No> {
+        furhat.gesture(Gestures.BrowFrown)
         furhat.say("That's weird")
         goto(programmingLanguages)
     }
@@ -115,6 +125,7 @@ val pythonProjectExperience: State = state(Parent) {
 
 val pythonProjectExperienceYes: State = state(Parent) {
     onEntry {
+        furhat.gesture(Gestures.Smile)
         furhat.say("That sounds interesting.")
         goto(programmingLanguages)
     }
@@ -135,11 +146,13 @@ val programmingLanguages: State = state(Parent) {
     }
 
     onResponse<Yes> {
+        furhat.gesture(Gestures.BigSmile)
         furhat.say("That sounds really good.")
         goto(studies)
     }
 
     onResponse<No> {
+        furhat.gesture(Gestures.ExpressSad)
         furhat.say("Well that is unfortunate.")
         goto(studies)
     }
@@ -174,6 +187,7 @@ val studies: State = state(Parent) {
     }
 
     onResponse {
+        furhat.gesture(Gestures.Smile)
         furhat.say("That actually sounds really interesting!")
         goto(personalProjects)
     }
@@ -198,6 +212,7 @@ val personalProjects: State = state(Parent) {
 
     //For now, no further questions about this
     onResponse<Yes> {
+        furhat.gesture(Gestures.BigSmile)
         furhat.say("That is perfect.")
         goto(personalProjectElaborate)
     }
@@ -205,6 +220,7 @@ val personalProjects: State = state(Parent) {
      *
      */
     onResponse<No> {
+        furhat.gesture(Gestures.ExpressSad)
         furhat.say("That's unfortunate.")
         goto(internationalSetting)
     }
@@ -234,6 +250,7 @@ val personalProjectElaborate: State = state(Parent) {
         )
     }
     onResponse {
+        furhat.gesture(Gestures.Smile)
         furhat.say("That's impressive.")
         goto(internationalSetting)
     }
@@ -254,6 +271,7 @@ val internationalSetting: State = state(Parent) {
     }
 
     onResponse<Yes> {
+        furhat.gesture(Gestures.Smile)
         furhat.say(
             "Okay, that sounds good. This is something that we view as a crucial " +
                     "thing at our company."
@@ -262,10 +280,10 @@ val internationalSetting: State = state(Parent) {
     }
 
     onResponse<No> {
-        furhat.say(
-            "Okay! But if you are comfortable working in an international work environment, " +
-                    "you could fit in well here."
-        )
+        furhat.say("Okay!")
+        furhat.gesture(Gestures.Nod)
+        furhat.say("But if you are comfortable working in an international work environment, " +
+                    "you could fit in well here.")
         goto(teamRole)
     }
 
