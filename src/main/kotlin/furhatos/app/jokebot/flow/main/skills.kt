@@ -52,15 +52,12 @@ val pythonCheck: State = state(Parent) {
     onEntry {
         furhat.ask(
             "Since previous experience with Python would be appreciated for this position, " +
-            "I would like to ask you if you have programmed in Python before. If you have this " +
-            "kind of experience, could you please elaborate a bit on that?"
-        )
-
+            "I would like to ask you if you have programmed in Python before?")
     }
 
     onResponse<Yes> {
         furhat.say("Amazing!")
-        goto(programmingLanguages)
+        goto(pythonProjectExperience)
     }
 
     //Maybe we could add another nlu for answers that have to do with other languages
@@ -93,6 +90,31 @@ val pythonCheck: State = state(Parent) {
     onNoResponse {
         furhat.say("I couldn't hear you.")
         reentry()
+    }
+}
+
+val pythonProjectExperience : State = state(Parent){
+    onEntry{
+        furhat.ask("Could you elaborate on that?")
+    }
+    onResponse{
+        furhat.say("That sounds interesting.")
+        goto(programmingLanguages)
+    }
+    onResponse<Yes>{
+        furhat.say("Alright, then tell me about it.")
+        goto(pythonProjectExperienceYes)
+    }
+    onResponse<No>{
+        furhat.say("That's weird")
+        goto(programmingLanguages)
+    }
+}
+
+val pythonProjectExperienceYes : State = state(Parent){
+    onEntry {
+        furhat.say("That sounds interesting.")
+        goto(programmingLanguages)
     }
 }
 
