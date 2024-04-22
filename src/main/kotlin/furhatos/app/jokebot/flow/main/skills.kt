@@ -184,7 +184,6 @@ val personalProjects: State = state(Parent) {
         furhat.say("Alright!")
         goto(internationalSetting)
     }
-
     onNoResponse {
         furhat.say("I couldn't hear you. I'll repeat my question.")
         reentry()
@@ -216,6 +215,10 @@ val internationalSetting: State = state(Parent) {
         furhat.say("Alright.")
         goto(teamRole)
     }
+
+    /**
+     * We should maybe prepare more sentences like this so that it isn't repeating too much.
+     */
 
     onNoResponse {
         furhat.say("I couldn't hear you. I'll repeat my question.")
