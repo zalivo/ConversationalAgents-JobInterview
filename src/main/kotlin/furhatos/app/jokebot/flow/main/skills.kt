@@ -107,19 +107,29 @@ val pythonProjectExperience: State = state(Parent) {
         furhat.gesture(Gestures.Thoughtful)
         furhat.ask("Could you elaborate on that?")
     }
+
+    onResponse<Yes> {
+        furhat.ask("Alright, then tell me about it.")
+        goto(pythonProjectExperienceYes)
+    }
+
+    onResponse<No> {
+        furhat.gesture(Gestures.BrowFrown)
+        furhat.say("That's weird")
+        goto(programmingLanguages)
+    }
+
     onResponse {
         furhat.gesture(Gestures.Smile)
         furhat.say("That sounds interesting.")
         goto(programmingLanguages)
     }
-    onResponse<Yes> {
-        furhat.say("Alright, then tell me about it.")
-        goto(pythonProjectExperienceYes)
-    }
-    onResponse<No> {
-        furhat.gesture(Gestures.BrowFrown)
-        furhat.say("That's weird")
-        goto(programmingLanguages)
+
+    onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
+        furhat.say("I couldn't hear you. I'll repeat myself.")
+        reentry()
+
     }
 }
 
@@ -158,12 +168,12 @@ val programmingLanguages: State = state(Parent) {
     }
 
     onResponse {
-
         furhat.say("Alright.")
         goto(studies)
     }
 
     onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
         furhat.say("I couldn't hear you. I'll repeat the question.")
         reentry()
     }
@@ -188,11 +198,12 @@ val studies: State = state(Parent) {
 
     onResponse {
         furhat.gesture(Gestures.Smile)
-        furhat.say("That actually sounds really interesting!")
+        furhat.say("Sounds good!")
         goto(personalProjects)
     }
 
     onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
         furhat.say("I could not hear you. I will repeat the question.")
         reentry()
     }
@@ -216,9 +227,7 @@ val personalProjects: State = state(Parent) {
         furhat.say("That is perfect.")
         goto(personalProjectElaborate)
     }
-    /**
-     *
-     */
+
     onResponse<No> {
         furhat.gesture(Gestures.ExpressSad)
         furhat.say("That's unfortunate.")
@@ -227,17 +236,39 @@ val personalProjects: State = state(Parent) {
 
     onResponse<confusedUser> {
         furhat.say(
-            "You could tell me what specific things did you do in the project or how long did it take you." +
+            "You could tell me specific things you did in the project or how long it took you." +
                     "Just some basic information."
         )
+        goto(confusedPersonalProjectElaborate)
     }
 
     onResponse {
         furhat.say("Alright!")
         goto(internationalSetting)
     }
+
     onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
         furhat.say("I couldn't hear you. I'll repeat my question.")
+        reentry()
+    }
+}
+
+/**
+ * For if user is confused about the personal project question
+ */
+val confusedPersonalProjectElaborate: State = state(Parent) {
+    onEntry {
+        furhat.listen()
+    }
+
+    onResponse {
+        furhat.say("Okay!")
+        goto(internationalSetting)
+    }
+
+    onNoResponse {
+        furhat.say("Could you repeat?")
         reentry()
     }
 }
@@ -245,10 +276,11 @@ val personalProjects: State = state(Parent) {
 val personalProjectElaborate: State = state(Parent) {
     onEntry {
         furhat.ask(
-            "We are looking for someone who also has some personal projects running." +
+            "We are looking for someone who also has some personal projects going on. " +
                     "Please tell me more about those projects."
         )
     }
+
     onResponse {
         furhat.gesture(Gestures.Smile)
         furhat.say("That's impressive.")
@@ -256,6 +288,7 @@ val personalProjectElaborate: State = state(Parent) {
     }
 
     onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
         furhat.say("I couldn't hear you. I'll repeat my question.")
         reentry()
     }
@@ -297,6 +330,7 @@ val internationalSetting: State = state(Parent) {
      */
 
     onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
         furhat.say("I couldn't hear you. I'll repeat my question.")
         reentry()
     }

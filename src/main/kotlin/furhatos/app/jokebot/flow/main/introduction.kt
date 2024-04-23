@@ -120,6 +120,18 @@ val noConsent: State = state(Parent) {
         )
         goto(Idle)
     }
+
+    onResponse {
+        furhat.gesture(Gestures.Thoughtful)
+        furhat.say("Could you be more precise maybe? I'll repeat my question, and please, " +
+        "answer with a yes or a no.")
+        reentry()
+    }
+
+    onNoResponse {
+        furhat.say("I couldn't hear you. I'll repeat.")
+        reentry()
+    }
 }
 
 val askName: State = state(Parent) {

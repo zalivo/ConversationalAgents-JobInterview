@@ -28,6 +28,7 @@ val endSecIntro: State = state(Parent) {
     }
 
     onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
         furhat.say("I couldn't hear you. I'll repeat myself.")
         reentry()
     }

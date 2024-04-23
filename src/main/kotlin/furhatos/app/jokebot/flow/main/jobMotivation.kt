@@ -260,6 +260,7 @@ val repeatHearAboutPosition: State = state(Parent) {
     }
 
     onResponse<becauseOfCourse> {
+        furhat.gesture(Gestures.BigSmile)
         furhat.say("Hahaa, yes, I know. Let's still pretend this is a job interview.")
         goto(companyReason)
     }
