@@ -2,16 +2,18 @@ package furhatos.app.jokebot.flow.main
 
 import furhatos.app.jokebot.flow.Parent
 import furhatos.app.jokebot.nlu.confusedUser
-import furhatos.event.actions.ActionGaze
 import furhatos.nlu.common.*
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
+import furhatos.app.jokebot.jokes.*
 
 val startConsent: State = state(Parent) {
     /**
      * Robot Johnny welcomes user to job interview and asks for user's name
      */
+
     onEntry {
+        furhat.gesture(welcome)
         furhat.gesture(Gestures.Nod(strength = 0.5))
         furhat.say("Hi there. Welcome to this job interview for the IT junior position at our company.")
         furhat.gesture(Gestures.Smile)
@@ -24,7 +26,8 @@ val startConsent: State = state(Parent) {
     }
 
     onReentry {
-        furhat.gesture(Gestures.Nod)
+        furhat.gesture(welcome)
+        furhat.gesture(Gestures.Nod(strength = 0.5))
         furhat.say(
             "Hi there. Welcome to this job interview for the IT junior position at our company. My name is Johnny " +
                     "and I am going to lead this interview."
