@@ -1,6 +1,7 @@
 package furhatos.app.jokebot.flow.main
 
 import furhatos.app.jokebot.flow.Parent
+import furhatos.app.jokebot.jokes.grateful
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.No
 import furhatos.nlu.common.Yes
@@ -59,11 +60,12 @@ val anyQuestions: State = state(Parent) {
 val realInterviewEnd: State = state(Parent) {
     onEntry {
         furhat.gesture(Gestures.BigSmile)
-        furhat.say(
-            "Thank you for this interview, it has been a pleasure. Our HR team will evaluate this interview " +
-                    "and they will let you know if you will be invited to an in person interview. Thank you and have a " +
-                    "great day."
-        )
+        furhat.say("Thank you for this interview")
+        furhat.gesture(grateful)
+        furhat.say("it has been a pleasure. Our HR team will evaluate this interview " +
+                    "and they will let you know if you will be invited to an in person interview.")
+        furhat.gesture(Gestures.BigSmile)
+        furhat.say("Thank you and have a " + "great day.")
         furhat.gesture(Gestures.CloseEyes(duration=10.0))
         goto(Idle)
     }

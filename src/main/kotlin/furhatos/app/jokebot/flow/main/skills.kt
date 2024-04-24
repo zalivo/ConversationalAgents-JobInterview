@@ -1,8 +1,11 @@
 package furhatos.app.jokebot.flow.main
 
 import furhatos.app.jokebot.flow.Parent
+import furhatos.app.jokebot.jokes.proceed
 import furhatos.app.jokebot.nlu.confusedUser
+import furhatos.autobehavior.defineMicroexpression
 import furhatos.flow.kotlin.*
+import furhatos.gestures.BasicParams.*
 import furhatos.gestures.Gestures
 import furhatos.nlu.common.No
 import furhatos.nlu.common.Yes
@@ -15,7 +18,9 @@ val skillSecIntro: State = state(Parent) {
      */
     onEntry {
         furhat.gesture(Gestures.BrowRaise)
-        furhat.ask("Now I would like to talk about your skills and experience. Can we proceed?")
+        furhat.say("Now I would like to talk about your skills and experience.")
+        furhat.gesture(proceed)
+        furhat.ask("Can we proceed?")
     }
 
     onResponse<Yes> {
@@ -104,12 +109,22 @@ val pythonCheck: State = state(Parent) {
 
 val pythonProjectExperience: State = state(Parent) {
     onEntry {
-        furhat.gesture(Gestures.Thoughtful)
+        furhat.gesture(Gestures.Thoughtful(strength = 0.5))
         furhat.ask("Could you elaborate on that?", timeout = 60000)
+        furhat.setMicroexpression(
+            defineMicroexpression {
+                repeat(200..500) {
+                    adjust(-3.0..3.0, NECK_PAN)
+                    adjust(-3.0..3.0, NECK_TILT)
+                }
+            })
     }
 
     onResponse<Yes> {
-        furhat.say("Perfect, let's move onto the next question.")
+        furhat.gesture(Gestures.BigSmile)
+        furhat.say("Perfect")
+        furhat.gesture(proceed)
+        furhat.say("let's move onto the next question.")
         goto(programmingLanguages)
     }
 
@@ -177,10 +192,9 @@ val programmingLanguages: State = state(Parent) {
  */
 val studies: State = state(Parent) {
     onEntry {
-        furhat.ask(
-            "Could you tell me more about your studies? Maybe about your favorite subjects " +
-                    "or projects that you have worked on.", timeout = 60000
-        )
+        furhat.say("Could you tell me more about your studies?")
+        furhat.gesture(proceed)
+        furhat.ask("Maybe about your favorite subjects " +"or projects that you have worked on.", timeout = 60000)
 
         //furhat.ask(
         //"In your CV you mentioned you study at University of Twente. Could you tell me more about" +
