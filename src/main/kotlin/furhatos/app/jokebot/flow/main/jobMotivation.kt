@@ -76,7 +76,7 @@ val roleInterest: State = state(Parent) {
     onEntry {
         furhat.gesture(Gestures.BrowRaise)
         //User has 30 seconds to answer
-        furhat.ask("Okay, so why does this role interest you?", timeout = 30000)
+        furhat.ask("Okay, so why does this role interest you?", timeout = 60000)
     }
 
     //User answers with motivational intent
@@ -117,7 +117,7 @@ val roleInterest: State = state(Parent) {
 val repeatMotivation: State = state(Parent) {
     onEntry {
         //User has 30 seconds to answer
-        furhat.listen(timeout = 30000)
+        furhat.listen(timeout = 60000)
     }
 
     //User responds with motivational intent
@@ -162,7 +162,7 @@ val positionExpectations: State = state(Parent) {
         furhat.gesture(curiosity)
         furhat.ask(
             "I'd like to ask you what your expectations are from this role. Not salary-wise but " +
-                    "rather about the experience you can get or projects you might work on."
+                    "rather about the experience you can get or projects you might work on.", timeout = 60000
         )
     }
 
@@ -192,7 +192,7 @@ val positionExpectations: State = state(Parent) {
 val growth: State = state(Parent) {
     onEntry {
         furhat.gesture(curiosity)
-        furhat.ask("How do you think this position will improve your professional and personal skills?")
+        furhat.ask("How do you think this position will improve your professional and personal skills?", timeout = 60000)
     }
 
     onResponse {
@@ -211,7 +211,7 @@ val hearAboutPosition: State = state(Parent) {
 
     onEntry {
         //User has 30 seconds to answer
-        furhat.ask("Where did you hear about this position?", timeout = 30000)
+        furhat.ask("Where did you hear about this position?", timeout = 60000)
     }
 
     /**
@@ -249,7 +249,7 @@ val hearAboutPosition: State = state(Parent) {
 val repeatHearAboutPosition: State = state(Parent) {
     onEntry {
         //User has 30 seconds to answer
-        furhat.listen(timeout = 30000)
+        furhat.listen(timeout = 60000)
     }
 
     onResponse<socialMedia> {
@@ -282,7 +282,7 @@ val repeatHearAboutPosition: State = state(Parent) {
 val companyReason: State = state(Parent) {
 
     onEntry {
-        furhat.ask("Could you please tell me why you would like to work specifically at our company?")
+        furhat.ask("Could you please tell me why you would like to work specifically at our company?", timeout = 60000)
     }
 
     onResponse {

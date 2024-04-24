@@ -11,7 +11,7 @@ val endSecIntro: State = state(Parent) {
         furhat.gesture(Gestures.BrowRaise)
         furhat.ask(
             "We have reached the end of this interview. Do you have any questions or remarks regarding " +
-                    "this interview?"
+                    "this interview?", timeout = 60000
         )
     }
 
