@@ -21,7 +21,7 @@ val startConsent: State = state(Parent) {
         furhat.say("Before we start with the interview, I would like to say that this interview is going to be recorded")
         furhat.gesture(Gestures.Roll(strength = 0.3))
         furhat.say("and sent to our HR team for further evaluation.")
-        furhat.gesture(Gestures.BrowRaise(duration = 3.0))
+        furhat.gesture(consent)
         furhat.ask("Do you give consent for this interview to be recorded?")
     }
 
@@ -104,7 +104,7 @@ val noConsent: State = state(Parent) {
         furhat.gesture(Gestures.ExpressSad)
         furhat.say("In that case, I'm afraid we cannot continue with the interview.")
         furhat.say("Because of this, our HR team will only have a look at your CV, and after that, they will decide if you'll be invited to an in-person interview.")
-        furhat.gesture(Gestures.BrowRaise)
+        furhat.gesture(Gestures.BrowRaise(duration = 3.0))
         furhat.ask("Do you give consent for this interview to be recorded?")
 
     }
@@ -180,6 +180,8 @@ val askName: State = state(Parent) {
 val canWeStart: State = state(Parent) {
 
     onEntry {
+        furhat.gesture(ready)
+        furhat.gesture(Gestures.Smile(strength = 0.25))
         furhat.ask("Are you comfortable and ready to start the interview?", timeout = 4000)
     }
 
@@ -267,6 +269,7 @@ val repeatAboutYourself: State = state(Parent) {
      * User answers something, proceed
      */
     onResponse {
+        furhat.gesture(Gestures.Smile)
         furhat.say("That sounds interesting!")
         goto(roleInterest)
     }

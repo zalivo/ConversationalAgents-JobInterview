@@ -154,6 +154,8 @@ val hearAboutPosition: State = state(Parent) {
 
     onEntry {
         //User has 30 seconds to answer
+        furhat.gesture(amusing)
+        furhat.gesture(Gestures.Smile)
         furhat.ask("Where did you hear about this position?", timeout = 60000)
     }
 
