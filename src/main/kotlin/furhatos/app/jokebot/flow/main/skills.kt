@@ -109,7 +109,6 @@ val pythonProjectExperience: State = state(Parent) {
     }
 
     onResponse<Yes> {
-        furhat.ask("Alright, then tell me about it.")
         goto(pythonProjectExperienceYes)
     }
 
@@ -136,8 +135,16 @@ val pythonProjectExperience: State = state(Parent) {
 val pythonProjectExperienceYes: State = state(Parent) {
     onEntry {
         furhat.gesture(Gestures.Smile)
-        furhat.say("That sounds interesting.")
+        furhat.ask("Alright, then tell me about it.")
+    }
+    onResponse{
+        furhat.say("Perfect, let's move onto the next question.")
         goto(programmingLanguages)
+    }
+    onNoResponse {
+        furhat.gesture(Gestures.Thoughtful)
+        furhat.say("I couldn't hear you. I'll repeat the question.")
+        reentry()
     }
 }
 
@@ -315,8 +322,10 @@ val internationalSetting: State = state(Parent) {
     onResponse<No> {
         furhat.say("Okay!")
         furhat.gesture(Gestures.Nod)
-        furhat.say("But if you are comfortable working in an international work environment, " +
-                    "you could fit in well here.")
+        furhat.say(
+            "But if you are comfortable working in an international work environment, " +
+                    "you could fit in well here."
+        )
         goto(teamRole)
     }
 
