@@ -65,10 +65,10 @@ val welcome = defineGesture("welcome") {
     reset(0.5)
 }
 
-val consent = defineGesture ("consent") {
-    frame(0.1,0.5) {
+val consent = defineGesture("consent") {
+    frame(0.1, 0.5) {
         BROW_INNER_UP to 1.0
-        MOUTH_SMILE_LEFT  to 0.5
+        MOUTH_SMILE_LEFT to 0.5
         MOUTH_SMILE_RIGHT to 0.5
     }
     reset(2.0)
@@ -96,20 +96,20 @@ val curiosity = defineGesture("curiosity") {
     reset(2.0)
 }
 
-val amusing = defineGesture ("amusing") {
+val amusing = defineGesture("amusing") {
     frame(0.1, 0.5) {
         EYEBROW_TILT_DOWN to 0.2
         EYEBROW_NARROWER to 0.1
         EYES_WIDER to 0.1
         NOSE_WIDER to 0.1
         CHEEK_FULLER to 0.25
-        MOUTH_SMILE_LEFT  to 0.25
+        MOUTH_SMILE_LEFT to 0.25
         MOUTH_SMILE_LEFT to 0.25
     }
     reset(2.0)
 }
 
-val proceed = defineGesture ("proceed") {
+val proceed = defineGesture("proceed") {
     frame(0.1, 0.5) {
         NECK_TILT to -0.5
         NECK_PAN to -2.0
@@ -118,7 +118,7 @@ val proceed = defineGesture ("proceed") {
     reset(2.0)
 }
 
-val grateful = defineGesture ("grateful") {
+val grateful = defineGesture("grateful") {
     frame(0.2) {
         EYE_BLINK_LEFT to 0.75
         EYE_BLINK_RIGHT to 0.75
@@ -126,8 +126,6 @@ val grateful = defineGesture ("grateful") {
     }
     reset(2.0)
 }
-
-
 
 
 //JokeBot gestures
@@ -144,11 +142,11 @@ val indefiniteSmile = defineGesture {
     frame(0.32, 0.72, persist = true) {
         SMILE_CLOSED to 0.5
     }
-    frame(0.2, 0.72){
+    frame(0.2, 0.72) {
         BROW_UP_LEFT to 1.0
         BROW_UP_RIGHT to 1.0
     }
-    frame(0.16, 0.72){
+    frame(0.16, 0.72) {
         BLINK_LEFT to 0.1
         BLINK_RIGHT to 0.1
     }

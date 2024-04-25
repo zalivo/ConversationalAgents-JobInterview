@@ -159,7 +159,10 @@ val pythonProjectExperience: State = state(Parent) {
 val programmingLanguages: State = state(Parent) {
 
     onEntry {
-        furhat.ask("Do you have any experience with some other programming languages? If so, please state them.", timeout = 60000)
+        furhat.ask(
+            "Do you have any experience with some other programming languages? If so, please state them.",
+            timeout = 60000
+        )
     }
 
     onResponse<Yes> {
@@ -194,7 +197,7 @@ val studies: State = state(Parent) {
     onEntry {
         furhat.say("Could you tell me more about your studies?")
         furhat.gesture(proceed)
-        furhat.ask("Maybe about your favorite subjects " +"or projects that you have worked on.", timeout = 60000)
+        furhat.ask("Maybe about your favorite subjects " + "or projects that you have worked on.", timeout = 60000)
 
         //furhat.ask(
         //"In your CV you mentioned you study at University of Twente. Could you tell me more about" +

@@ -126,8 +126,10 @@ val noConsent: State = state(Parent) {
 
     onResponse {
         furhat.gesture(Gestures.Thoughtful)
-        furhat.say("Could you be more precise maybe? I'll repeat my question, and please, " +
-        "answer with a yes or a no.")
+        furhat.say(
+            "Could you be more precise maybe? I'll repeat my question, and please, " +
+                    "answer with a yes or a no."
+        )
         reentry()
     }
 
@@ -165,10 +167,12 @@ val askName: State = state(Parent) {
      * If the user does not respond, proceed anyway
      */
     onNoResponse {
-        furhat.gesture(Gestures.Nod(duration=0.15))
+        furhat.gesture(Gestures.Nod(duration = 0.15))
         furhat.say("I get it,")
-        furhat.say("I was also really nervous at my first job interview. " +
-        "I also forgot my own name then.")
+        furhat.say(
+            "I was also really nervous at my first job interview. " +
+                    "I also forgot my own name then."
+        )
         furhat.gesture(Gestures.Surprise, async = false)
         goto(canWeStart)
     }
@@ -252,7 +256,7 @@ val tellMeAboutYourself: State = state(Parent) {
         furhat.say("I can't really hear you. Could you repeat that?")
         goto(repeatAboutYourself)
     }
-    onResponse<confusedUser>{
+    onResponse<confusedUser> {
         furhat.say("Just tell me any basic background about yourself - hobbies, school and stuff")
     }
 }

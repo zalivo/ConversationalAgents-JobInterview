@@ -135,7 +135,10 @@ val positionExpectations: State = state(Parent) {
 
 val growth: State = state(Parent) {
     onEntry {
-        furhat.ask("How do you think this position will improve your professional and personal skills?", timeout = 60000)
+        furhat.ask(
+            "How do you think this position will improve your professional and personal skills?",
+            timeout = 60000
+        )
     }
 
     onResponse {
@@ -163,7 +166,7 @@ val hearAboutPosition: State = state(Parent) {
      * it.intent doesn't work, should have a look at it later
      */
     onResponse<socialMedia> {
-        furhat.say("We've been working on our public profile on" + it.intent +"for quite some time")
+        furhat.say("We've been working on our public profile on" + it.intent + "for quite some time")
         furhat.gesture(Gestures.Surprise)
         furhat.say("so we are glad that you found us there.")
         goto(companyReason)
@@ -199,7 +202,7 @@ val repeatHearAboutPosition: State = state(Parent) {
 
     onResponse<socialMedia> {
         furhat.say("We've been working on our public profile there for quite some time")
-        furhat.gesture(Gestures.Surprise, async=false)
+        furhat.gesture(Gestures.Surprise, async = false)
         furhat.say("so we are glad that you found us there.")
         goto(companyReason)
     }

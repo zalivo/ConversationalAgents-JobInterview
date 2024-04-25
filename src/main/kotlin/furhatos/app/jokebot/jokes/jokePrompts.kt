@@ -36,6 +36,7 @@ private val negativeIntros = listOf(
     "I haven’t had much luck with this one.",
     "I’ll give this one another chance"
 )
+
 /**
  * Gives a comment based on the users reaction to the joke.
  *  -> User smiled or not
@@ -93,16 +94,4 @@ private val smileResponse = listOf(
 val continuePrompt = listOf(
     "Should I go on?",
     "Would you like another one?"
-)
-
-private val generalNoResponse = listOf(
-    ""
-)
-
-private val generalYesResponse = listOf(
-    ""
-)
-
-private val backChanneling = listOf(
-    ""
 )
